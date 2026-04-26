@@ -19,6 +19,10 @@ public class Inventory {
         
     }
     
+    public Inventory(ArrayList<Item> savedInventory){
+        items.addAll(savedInventory);
+    }
+    
     public void addItem(Item item){
         items.add(item);
     }
@@ -27,6 +31,11 @@ public class Inventory {
         items.remove(item);
     }
     
+    public void printInventory(){
+        for(int i = 0; i < items.size(); i++){
+            System.out.println(items.get(i).name + "(" + i + ")");
+        }
+    }
     
     
     

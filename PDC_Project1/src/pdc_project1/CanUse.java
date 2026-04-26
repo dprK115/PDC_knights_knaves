@@ -8,7 +8,6 @@ package pdc_project1;
  *
  * @author lukea
  */
-public interface IsEquippable {
-    void equip();
-    void unequip();
+public interface CanUse {
+    void use();
 }
