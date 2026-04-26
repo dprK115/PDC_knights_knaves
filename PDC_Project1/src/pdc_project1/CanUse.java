@@ -9,5 +9,5 @@ package pdc_project1;
  * @author lukea
  */
 public interface CanUse {
-    void use();
+    void use(int index);
 }
