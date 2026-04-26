@@ -8,7 +8,7 @@ package pdc_project1;
  *
  * @author lukea
  */
-public class Item {
+public abstract class Item {
     public String name;
     
     public Item(String name){

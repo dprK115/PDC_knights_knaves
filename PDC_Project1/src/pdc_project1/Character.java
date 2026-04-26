@@ -14,10 +14,15 @@ public abstract class Character {
     public int health;
     public int attack;
     public int defense;
+    public int maxHealth;
     
     public Character(String name) {
         this.name = name;
     }
+    
+    public abstract void attack(Character Enemy);
+    public abstract void defend();
+    public abstract void undefend();
     
     
     

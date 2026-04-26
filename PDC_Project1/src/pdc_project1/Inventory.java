@@ -27,6 +27,11 @@ public class Inventory {
         items.remove(item);
     }
     
+    public void printInventory(){
+        for(int i = 0; i < items.size(); i++){
+            System.out.println(items.get(i).name + "(" + i + ")");
+        }
+    }
     
     
     
