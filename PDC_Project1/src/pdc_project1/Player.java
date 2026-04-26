@@ -8,7 +8,7 @@ package pdc_project1;
  *
  * @author lukea
  */
-public class Player extends Character implements CanEquip {
+public class Player extends Character implements CanEquip, CanUse {
     
     Inventory inventory = new Inventory();
     Item equippedArmor;
@@ -50,6 +50,11 @@ public class Player extends Character implements CanEquip {
         }else if (inventory.items.get(index) instanceof Weapon){
             equippedWeapon = inventory.items.get(index);
         }
+    }
+    
+    @Override
+    public void use(int index){
+        
     }
     
     
