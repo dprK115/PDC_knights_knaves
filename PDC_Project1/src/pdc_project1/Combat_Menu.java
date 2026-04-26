@@ -45,8 +45,8 @@ public class Combat_Menu {
                 
                 Item item = player.inventory.items.get(index);
                 
-                if(item instanceof CanUse){
-                    ((CanUse)item).use();
+                if(item instanceof potion){
+                    ((potion)item).use();
                 }
                 else{
                     System.out.println("Item cannot be used");
