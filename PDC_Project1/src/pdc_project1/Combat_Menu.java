@@ -16,7 +16,7 @@ public class Combat_Menu {
     Scanner scanner = new Scanner(System.in);
     
     public void startCombat(Player player, Enemy enemy){
-        
+    
         while(player.health > 0 && enemy.health > 0){
             
             System.out.println("\n--- COMBAT ---");
@@ -32,6 +32,10 @@ public class Combat_Menu {
             if(choice == 1){
                 player.attack(enemy);
                 System.out.println("You attacked the enemy");
+                
+                if(enemy.health <= 0){
+                    break;
+                }
             }
             else if(choice == 2){
                 player.defend();
@@ -43,13 +47,19 @@ public class Combat_Menu {
                 
                 int index = scanner.nextInt();
                 
-                Item item = player.inventory.items.get(index);
-                
-                if(item instanceof potion){
-                    ((potion)item).use();
+                if(index >= 0 && index < player.inventory.items.size()){
+                    
+                    Item item = player.inventory.items.get(index);
+                    
+                    if(item instanceof Potion){
+                        player.use(index);
+                    }
+                    else{
+                        System.out.println("Item cannot be used");
+                    }
                 }
                 else{
-                    System.out.println("Item cannot be used");
+                    System.out.println("Invalid index");
                 }
             }
             else{
@@ -59,6 +69,10 @@ public class Combat_Menu {
             if(enemy.health > 0){
                 enemy.attack(player);
                 System.out.println("Enemy attacks");
+                
+                if(player.health <= 0){
+                    break;
+                }
             }
             
             player.undefend();
