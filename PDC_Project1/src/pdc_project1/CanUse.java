@@ -8,6 +8,6 @@ package pdc_project1;
  *
  * @author lukea
  */
-public interface Usable {
+public interface CanUse {
     void use();
 }
