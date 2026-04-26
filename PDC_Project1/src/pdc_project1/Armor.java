@@ -8,11 +8,16 @@ package pdc_project1;
  *
  * @author lukea
  */
-public abstract class Item {
-    public String name;
+public class Armor extends Item {
+    int defenseModifier;
     
-    public Item(String name){
-    this.name = name;
-}
-   
+    public Armor(String name, int defenseStat) {
+        super(name);
+        this.defenseModifier = defenseStat;
+    }
+    
+    
+        
+    
+    
 }

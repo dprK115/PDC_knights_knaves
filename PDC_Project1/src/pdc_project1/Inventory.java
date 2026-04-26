@@ -19,6 +19,10 @@ public class Inventory {
         
     }
     
+    public Inventory(ArrayList<Item> savedInventory){
+        items.addAll(savedInventory);
+    }
+    
     public void addItem(Item item){
         items.add(item);
     }
