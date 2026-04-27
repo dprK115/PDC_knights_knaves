@@ -70,7 +70,7 @@ public class Combat_Menu {
                 enemy.attack(player);
                 System.out.println("Enemy attacks");
                 
-                if(player.health <= 0){
+                if(player.health <= 0 || enemy.health <= 0){
                     break;
                 }
             }
@@ -78,11 +78,9 @@ public class Combat_Menu {
             player.undefend();
         }
         
-        if(player.health <= 0){
+        if(player.health < 0){
             System.out.println("You lost");
         }
-        else{
-            System.out.println("You won");
-        }
+        
     }
 }

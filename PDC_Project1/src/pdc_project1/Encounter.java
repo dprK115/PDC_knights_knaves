@@ -8,6 +8,9 @@ package pdc_project1;
  *
  * @author vishw
  */
-public abstract class Encounter {
+import java.io.Serializable;
+
+public abstract class Encounter implements Serializable{
+    private static final long serialVersionUID = 1L;
     public abstract void start(Player player);
 }

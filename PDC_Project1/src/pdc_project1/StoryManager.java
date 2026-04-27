@@ -9,18 +9,21 @@ package pdc_project1;
  * @author vishw
  */
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class StoryManager {
-    
+public class StoryManager implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     ArrayList<Encounter> encounters = new ArrayList<>();
     int index = 0;
-    
-    public void addEncounter(Encounter e){
+
+    public void addEncounter(Encounter e) {
         encounters.add(e);
     }
-    
-    public Encounter getNextEncounter(){
-        if(index < encounters.size()){
+
+    public Encounter getNextEncounter() {
+        if (index < encounters.size()) {
+            
             return encounters.get(index++);
         }
         return null;

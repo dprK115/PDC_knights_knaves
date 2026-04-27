@@ -10,9 +10,10 @@ package pdc_project1;
  */
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Inventory {
-
+public class Inventory implements Serializable{
+    private static final long serialVersionUID = 1L;
     ArrayList<Item> items = new ArrayList<>();
     
     public Inventory() {
@@ -25,6 +26,7 @@ public class Inventory {
     
     public void addItem(Item item){
         items.add(item);
+        System.out.println("You picked up" + item);
     }
     
     public void removeItem(Item item){

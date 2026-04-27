@@ -8,8 +8,10 @@ package pdc_project1;
  *
  * @author lukea
  */
-public abstract class Character {
-    
+import java.io.Serializable;
+
+public abstract class Character implements Serializable {
+    private static final long serialVersionUID = 1L;
     public String name = "";
     public int health;
     public int attack;
