@@ -12,15 +12,20 @@ public class Combat extends Encounter {
     
     Player player;
     Enemy enemy;
+    Item loot;
     
-    public Combat(Player player, Enemy enemy){
+    public Combat(Player player, Enemy enemy, Item loot){
         this.player = player;
         this.enemy = enemy;
+        this.loot = loot;
     }
     
     @Override
     public void start(Player player){
         Combat_Menu menu = new Combat_Menu();
         menu.startCombat(this.player, this.enemy);
+        player.inventory.addItem(loot);
+        
+        
     }
 }

@@ -1,0 +1,51 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package pdc_project1;
+
+/**
+ *
+ * @author lukea
+ */
+import java.util.Scanner;
+
+public class CharacterCreation {
+
+    String charName;
+    String yesNo;
+    Scanner input = new Scanner(System.in);
+
+    public CharacterCreation() {
+
+    }
+
+    public final Player createMenu() {
+
+        System.out.println("The smell of damp and mildew hang heavy in the air");
+        System.out.println("Your eyes while open, still cannot discern any noticible light");
+        System.out.println("A feint white glow starts eminating from what appears to be a glass orb of sorts with tempests contained inside.\n"
+                + "Standing behind the orb is a ragged, discheveled looking man in what appears to be mages robes"
+        );
+        System.out.println("The man begins to speak");
+        System.out.println("First, please tell me your name adventurer");
+        charName = input.nextLine();
+        System.out.println("Hmmm, are you certain that " + charName + " is what they call you? (y/n)");
+        yesNo = input.nextLine();
+
+        if (yesNo.equals("y")) {
+            
+            System.out.println("Ahhh yes, I remember you, Sir ")
+            System.out.println("Best of luck in your travels " + charName);
+            Player player = new Player(charName);
+            return player;
+        } else if (yesNo.equals("n")) {
+            return createMenu();
+        } else {
+            System.out.println("Invalid input, please enter y or n");
+            return createMenu();
+        }
+
+    }
+
+}
