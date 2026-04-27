@@ -26,7 +26,6 @@ public class Game {
 
         gameMenu.gameMenuStart();
 
-        System.out.println("Game Over");
     }
 
     public void quit() {
