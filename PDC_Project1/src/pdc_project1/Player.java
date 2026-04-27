@@ -24,8 +24,10 @@ public class Player extends Character implements CanEquip, CanUse {
 
     public void levelUp() {
         this.maxHealth += 100;
+        this.health = maxHealth;
         this.attack += 10;
         this.defense += 10;
+        System.out.println("You leveled up");
     }
 
     public void getStatCard() {
@@ -73,8 +75,10 @@ public class Player extends Character implements CanEquip, CanUse {
     public void equip(int index) {
         if (inventory.items.get(index) instanceof Armor) {
             equippedArmor = inventory.items.get(index);
+            defense = equippedArmor.getStat();
         } else if (inventory.items.get(index) instanceof Weapon) {
             equippedWeapon = inventory.items.get(index);
+            attack = equippedArmor.getStat();
         }
     }
 

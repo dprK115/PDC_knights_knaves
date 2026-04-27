@@ -34,9 +34,11 @@ public class CharacterCreation {
         yesNo = input.nextLine();
 
         if (yesNo.equals("y")) {
-            
-            System.out.println("Ahhh yes, I remember you, Sir ")
-            System.out.println("Best of luck in your travels " + charName);
+
+            System.out.println("Ahhh yes, I remember you, Sir " + charName + " of Castle Dior");
+            System.out.println("You fell to the Vampire Lord Danil just shy of 2 decades ago");
+            System.out.println("You must now reclaim your former domain and save the people of Dior");
+            System.out.println("Best of luck in your journey " + charName);
             Player player = new Player(charName);
             return player;
         } else if (yesNo.equals("n")) {

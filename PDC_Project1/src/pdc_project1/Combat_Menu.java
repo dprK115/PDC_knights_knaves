@@ -74,9 +74,12 @@ public class Combat_Menu {
                     break;
                 }
             }
+            if (choice == 2){
+                player.undefend();
+            }
             
-            player.undefend();
         }
+        player.levelUp();
         
         if(player.health < 0){
             System.out.println("You lost");

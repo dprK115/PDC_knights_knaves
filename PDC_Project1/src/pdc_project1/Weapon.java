@@ -16,4 +16,9 @@ public class Weapon extends Item {
         super(name);
         this.attackModifier = attackModifier;
     }
+    
+    @Override
+    public int getStat(){
+        return this.attackModifier;
+    }
 }
