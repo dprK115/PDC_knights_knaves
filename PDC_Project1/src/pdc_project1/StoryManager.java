@@ -20,7 +20,11 @@ public class StoryManager implements Serializable {
     public void addEncounter(Encounter e) {
         encounters.add(e);
     }
-
+    
+    public Encounter getCurrentEncounter(){
+        return encounters.get(index);
+    }
+    
     public Encounter getNextEncounter() {
         if (index < encounters.size()) {
             

@@ -16,7 +16,10 @@ public class Armor extends Item {
         this.defenseModifier = defenseStat;
     }
     
-    
+    @Override
+    public int getStat(){
+        return this.defenseModifier;
+    }
         
     
     
