@@ -13,6 +13,8 @@ public class Player extends Character implements CanEquip, CanUse {
     Inventory inventory = new Inventory();
     Item equippedArmor = new Armor("Dirty Clothes", 0);
     Item equippedWeapon = new Weapon("Fists", 0);
+    int nextLevelXp;
+   
 
     public Player(String name) {
         super(name);
@@ -20,14 +22,24 @@ public class Player extends Character implements CanEquip, CanUse {
         this.health = maxHealth;
         this.attack = 10;
         this.defense = 5;
+        this.xp = 0;
+        this.level = 1;
+        this.nextLevelXp = level * 5;
     }
 
     public void levelUp() {
-        this.maxHealth += 100;
-        this.health = maxHealth;
-        this.attack += 10;
-        this.defense += 10;
-        System.out.println("You leveled up");
+
+        if (xp >= level * 5) {
+            this.maxHealth += 100;
+            this.health = maxHealth;
+            this.attack += 10;
+            this.defense += 10;
+            System.out.println("You leveled up");
+        }else{
+            System.out.println("you are " + ((nextLevelXp) - xp) + " xp away from leveling up");
+        }  // reworking level up system to be xp point based.
+
+        
     }
 
     public void getStatCard() {
@@ -38,7 +50,7 @@ public class Player extends Character implements CanEquip, CanUse {
         System.out.println("Health:      " + health + "/" + maxHealth);
         System.out.println("Attack:      " + attack);
         System.out.println("Defense:     " + defense);
-
+        System.out.println("Level:       " + level);
         System.out.println("---------------------------------");
 
         System.out.println("Weapon:      "
@@ -47,6 +59,7 @@ public class Player extends Character implements CanEquip, CanUse {
         System.out.println("Armor:       "
                 + (equippedArmor != null ? equippedArmor.name : "None"));
 
+        
         System.out.println("=================================");
     }
 
@@ -78,7 +91,7 @@ public class Player extends Character implements CanEquip, CanUse {
             defense = equippedArmor.getStat();
         } else if (inventory.items.get(index) instanceof Weapon) {
             equippedWeapon = inventory.items.get(index);
-            attack = equippedArmor.getStat();
+            attack = equippedWeapon.getStat(); //fixed bug where attack is set to equipped armor stat.
         }
     }
 

@@ -17,6 +17,8 @@ public abstract class Character implements Serializable {
     public int attack;
     public int defense;
     public int maxHealth;
+    public int xp; // adding xp to all characters
+    int level; // adding levels to all characters
     
     public Character(String name) {
         this.name = name;
