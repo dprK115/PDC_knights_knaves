@@ -8,13 +8,12 @@ package pdc_project1;
  *
  * @author lukea
  */
-import java.util.Scanner;
-
-public class CharacterCreation {
+// CharacterCreation extends Game now to use the same scanner that is opened in Game.java
+public class CharacterCreation extends Game {
 
     String charName;
     String yesNo;
-    Scanner input = new Scanner(System.in);
+   
 
     public CharacterCreation() {
 

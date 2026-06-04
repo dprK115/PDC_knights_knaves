@@ -26,7 +26,7 @@ public class Inventory implements Serializable{
     
     public void addItem(Item item){
         items.add(item);
-        System.out.println("You picked up" + item.name);
+        System.out.println("You picked up " + item.name);
     }
     
     public void removeItem(Item item){

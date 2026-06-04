@@ -11,12 +11,14 @@ package pdc_project1;
  */
 public class Enemy extends Character{
     
-    public Enemy(String name, int health, int attack, int defense){
+    public Enemy(String name, int health, int attack, int defense, int level){
         super(name);
         this.maxHealth = health;
         this.health = this.maxHealth;
         this.attack = attack;
         this.defense = defense;
+        this.level = level;
+        this.xp = level * 2;
     }
     
     @Override

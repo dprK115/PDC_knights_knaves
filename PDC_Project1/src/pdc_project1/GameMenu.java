@@ -8,7 +8,7 @@ package pdc_project1;
  *
  * @author lukea
  */
-import java.util.Scanner;
+
 
 public class GameMenu extends Game {
 
@@ -26,11 +26,13 @@ public class GameMenu extends Game {
                 System.out.println("--------" + player.name + "--------");
                 System.out.println("Please Choose and Action");
                 System.out.println("1. Proceed Forward\n2. Check Inventory\n3. View Stats\n4. Return to Main Menu");
+                
                 int userInput = input.nextInt();
-
+                 
                 switch (userInput) {
                     case 1:
                         encounter = manager.getNextEncounter();
+                        encounter = manager.getCurrentEncounter();
                         option = false;
                         break;
                     case 2:
