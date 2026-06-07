@@ -10,7 +10,9 @@ package pdc_project1;
  */
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DBManager {
 
@@ -27,12 +29,53 @@ public class DBManager {
         return DriverManager.getConnection(URL, USER_NAME, PASSWORD);
     }
     
-    public void establishConnection(){
+    public final void establishConnection(){
         try {
             conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
         } catch (SQLException ex) {
-
+            ex.printStackTrace();
         }
+    }
+    
+    public void closeConnection(){
+        if (conn != null){
+            try{
+                conn.close();
+            }catch (SQLException ex){
+                ex.printStackTrace();
+            }
+        }
+    }
+    
+    public void updateDB(String sql) {
+
+        Connection connection = this.conn;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public ResultSet queryDB(String sql) {
+
+        Connection connection = this.conn;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return resultSet;
     }
     
 }
