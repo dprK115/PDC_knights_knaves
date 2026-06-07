@@ -7,23 +7,22 @@ package database;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 /**
  *
  * @author lukea
  */
-public class DBIntialiser {
+public class DBInitialiser {
 
     private DBManager dbManager;
 
-    public DBIntialiser(DBManager dbManager) {
+    public DBInitialiser(DBManager dbManager) {
         this.dbManager = dbManager;
     }
-    
-
 
     public void createTables() {
-        createPlayerTable();
         createItemTable();
+        createPlayerTable();
         createInventoryTable();
         createStoryProgressTable();
         createEncounterTable();
@@ -33,10 +32,14 @@ public class DBIntialiser {
         String sql = "CREATE TABLE PLAYER ("
                 + "PLAYER_ID INT PRIMARY KEY, "
                 + "NAME VARCHAR(50), "
-                + "CONSTITUTION INT, "
+                + "LEVEL INT, "
                 + "HEALTH INT, "
-                + "ATTACK INT, "
-                + "DEFENSE INT"
+                + "EQUIPPED_WEAPON_ID INT, "
+                + "EQUIPPED_ARMOR_ID INT,"
+                + "XP INT,"
+                + "DIFFICULTY VARCHAR(20),"
+                + "FOREIGN KEY (EQUIPPED_WEAPON_ID) REFERENCES ITEM(ITEM_ID),"
+                + "FOREIGN KEY (EQUIPPED_ARMOR_ID) REFERENCES ITEM(ITEM_ID)"
                 + ")";
 
         executeCreate(sql, "PLAYER");
@@ -60,7 +63,9 @@ public class DBIntialiser {
                 + "PLAYER_ID INT, "
                 + "ITEM_ID INT, "
                 + "QUANTITY INT, "
-                + "PRIMARY KEY (PLAYER_ID, ITEM_ID)"
+                + "PRIMARY KEY (PLAYER_ID, ITEM_ID),"
+                + "FOREIGN KEY (PLAYER_ID) REFERENCES PLAYER(PLAYER_ID), "
+                + "FOREIGN KEY (ITEM_ID) REFERENCES ITEM(ITEM_ID)"
                 + ")";
 
         executeCreate(sql, "INVENTORY");
@@ -79,20 +84,17 @@ public class DBIntialiser {
         String sql = "CREATE TABLE ENCOUNTER ("
                 + "ENCOUNTER_ID INT PRIMARY KEY, "
                 + "ENCOUNTER_TYPE VARCHAR(20), "
-                + "TEXT VARCHAR(500), "
+                + "ENCOUNTER_TEXT VARCHAR(500), "
                 + "ENEMY_NAME VARCHAR(50), "
-                + "ENEMY_HEALTH INT, "
-                + "ENEMY_ATTACK INT, "
-                + "ENEMY_DEFENSE INT, "
-                + "LOOT_ITEM_ID INT"
+                + "LOOT_ITEM_ID INT,"
+                + "FOREIGN KEY (LOOT_ITEM_ID) REFERENCES ITEM(ITEM_ID)"
                 + ")";
 
         executeCreate(sql, "ENCOUNTER");
     }
 
     private void executeCreate(String sql, String tableName) {
-        try (Connection conn = dbManager.getConnection();
-             Statement stmt = conn.createStatement()) {
+        try (Connection conn = dbManager.getConnection(); Statement stmt = conn.createStatement()) {
 
             stmt.executeUpdate(sql);
             System.out.println(tableName + " table created.");
@@ -107,5 +109,3 @@ public class DBIntialiser {
         }
     }
 }
-
-

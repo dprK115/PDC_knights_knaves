@@ -28,25 +28,25 @@ public class DBManager {
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER_NAME, PASSWORD);
     }
-    
-    public final void establishConnection(){
+
+    public final void establishConnection() {
         try {
             conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
-    public void closeConnection(){
-        if (conn != null){
-            try{
+
+    public void closeConnection() {
+        if (conn != null) {
+            try {
                 conn.close();
-            }catch (SQLException ex){
+            } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
     }
-    
+
     public void updateDB(String sql) {
 
         Connection connection = this.conn;
@@ -61,7 +61,7 @@ public class DBManager {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public ResultSet queryDB(String sql) {
 
         Connection connection = this.conn;
@@ -77,5 +77,81 @@ public class DBManager {
         }
         return resultSet;
     }
-    
+
+    public void clearAllTables() {
+        String[] tables = {
+            "INVENTORY",
+            "STORY_PROGRESS",
+            "PLAYER",
+            "ENCOUNTER",
+            "ITEM"
+        };
+
+        try (Statement stmt = conn.createStatement()) {
+
+            conn.setAutoCommit(false);
+
+            for (String table : tables) {
+                try {
+                    stmt.executeUpdate("DELETE FROM " + table);
+                    System.out.println(table + " table cleared.");
+                } catch (SQLException e) {
+                    System.out.println("Could not clear table: " + table);
+
+                    // X0X05 = table does not exist in Derby
+                    if ("X0X05".equals(e.getSQLState())) {
+                        System.out.println(table + " does not exist yet.");
+                    } else {
+                        throw e;
+                    }
+                }
+            }
+
+            conn.commit();
+            System.out.println("All database tables cleared.");
+
+        } catch (SQLException e) {
+            System.out.println("Error clearing database tables.");
+            e.printStackTrace();
+        }
+    }
+
+    public void DropAllTables() {
+        String[] tables = {
+            "INVENTORY",
+            "STORY_PROGRESS",
+            "PLAYER",
+            "ENCOUNTER",
+            "ITEM"
+        };
+
+        try (Statement stmt = conn.createStatement()) {
+
+            conn.setAutoCommit(false);
+
+            for (String table : tables) {
+                try {
+                    stmt.executeUpdate("DROP TABLE " + table);
+                    System.out.println(table + " table cleared.");
+                } catch (SQLException e) {
+                    System.out.println("Could not clear table: " + table);
+
+                    // X0X05 = table does not exist in Derby
+                    if ("X0X05".equals(e.getSQLState())) {
+                        System.out.println(table + " does not exist yet.");
+                    } else {
+                        throw e;
+                    }
+                }
+            }
+
+            conn.commit();
+            System.out.println("All database tables cleared.");
+
+        } catch (SQLException e) {
+            System.out.println("Error clearing database tables.");
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -15,15 +15,22 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DBTestDAO {
+    
+    
 
     public static void main(String[] args) {
         DBManager db = new DBManager();
-
+        DBInitialiser dbInit = new DBInitialiser(db);
+        db.DropAllTables();
         try (Connection conn = db.getConnection()) {
             System.out.println("Connected to KnightsKnavesDB successfully.");
         } catch (SQLException e) {
             System.out.println("Could not connect to database.");
             e.printStackTrace();
         }
+        
+        dbInit.createTables();
+        
+        
     }
 }
