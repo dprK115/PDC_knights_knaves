@@ -1,4 +1,4 @@
-package pdc_project1;
+package database;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -10,6 +10,7 @@ package pdc_project1;
  */
 
 
+import database.DBManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 
