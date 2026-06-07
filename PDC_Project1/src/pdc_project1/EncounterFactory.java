@@ -14,7 +14,8 @@ public class EncounterFactory {
             String encounterType,
             Player player,
             String storyText,
-            Enemy enemy,
+            String enemyName,
+            int enemyLevel,
             Item loot
     ) {
 
@@ -23,6 +24,7 @@ public class EncounterFactory {
         }
 
         if (encounterType.equalsIgnoreCase("COMBAT")) {
+            Enemy enemy = new Enemy(enemyName, enemyLevel);
             return new Combat(player, enemy, loot);
         }
 

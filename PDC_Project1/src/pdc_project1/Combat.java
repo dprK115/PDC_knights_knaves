@@ -12,7 +12,7 @@ public class Combat extends Encounter {
     
     Player player;
     Enemy enemy;
-    Item loot;
+    public Item loot;
     int gainedXp;
     
     public Combat(Player player, Enemy enemy, Item loot){

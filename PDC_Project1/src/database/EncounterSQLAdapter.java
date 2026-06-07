@@ -18,18 +18,19 @@ public class EncounterSQLAdapter {
     private int encounterID;
     private String encounterType;
     private String storyText;
-    private int enemyID;
+    private String enemyName;
+    private int enemyLevel;
     private int lootItemID;
 
-    public EncounterSQLAdapter(int encounterID, Encounter encounter) {
-        this.encounterID = encounterID;
+    public EncounterSQLAdapter( Encounter encounter) {
+        this.encounterID = encounter.getID();
 
         if (encounter instanceof Story) {
             Story story = (Story) encounter;
 
             this.encounterType = "STORY";
-            this.storyText = story.text;
-            this.enemyID = 0;
+            this.storyText = story.getText();
+            this.enemyName = null;
             this.lootItemID = 0;
         } else if (encounter instanceof Combat) {
             Combat combat = (Combat) encounter;
@@ -37,8 +38,9 @@ public class EncounterSQLAdapter {
             this.encounterType = "COMBAT";
             this.storyText = null;
             Enemy enemy = combat.getEnemy();
-            this.enemyID = enemy.getID
-            this.lootItemID = combat.loot.getID();
+            this.enemyName = enemy.name;
+            this.lootItemID = combat.loot.id;
+            this.enemyLevel = enemy.getLevel();
         } else {
             throw new IllegalArgumentException("Unknown encounter subclass.");
         }
@@ -48,6 +50,10 @@ public class EncounterSQLAdapter {
         return encounterID;
     }
 
+    public int getEnemyLevel() {
+        return enemyLevel;
+    }
+    
     public String getEncounterType() {
         return encounterType;
     }
@@ -56,8 +62,8 @@ public class EncounterSQLAdapter {
         return storyText;
     }
 
-    public int getEnemyID() {
-        return enemyID;
+    public String getEnemyName() {
+        return enemyName;
     }
 
     public int getLootItemID() {
