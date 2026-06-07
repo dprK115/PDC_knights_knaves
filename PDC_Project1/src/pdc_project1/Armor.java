@@ -11,8 +11,9 @@ package pdc_project1;
 public class Armor extends Item {
     int defenseModifier;
     
-    public Armor(String name, int defenseStat) {
+    public Armor(String name, int id, int defenseStat) {
         super(name);
+        this.id = id;
         this.defenseModifier = defenseStat;
     }
     

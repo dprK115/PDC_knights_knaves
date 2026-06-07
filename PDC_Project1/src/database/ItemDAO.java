@@ -16,8 +16,9 @@ import java.util.ArrayList;
 
 import pdc_project1.Item;
 
-public class ItemDAO {
+public class ItemDAO implements Dao<Item> {
 
+    private ArrayList<Item> itemList;
     private DBManager DBM;
     private Connection conn;
 
@@ -32,16 +33,18 @@ public class ItemDAO {
 
     }
 
-    public void saveItem(Item item) {
+    @Override
+    public void save(Item item) {
         if (itemExists(item)) {
-            updateItem(item);
+            update(item);
         } else {
-            insertItem(item);
+            insert(item);
         }
     }
 
     // INSERT item into database
-    public void insertItem(Item item) {
+    @Override
+    public void insert(Item item) {
 
         ItemSQLAdapter adapter = new ItemSQLAdapter(item);
 
@@ -69,7 +72,8 @@ public class ItemDAO {
     }
 
     // UPDATE item in database
-    public void updateItem(Item item) {
+    @Override
+    public void update(Item item) {
         ItemSQLAdapter adapter = new ItemSQLAdapter(item);
 
         String sql = "UPDATE ITEM SET "
@@ -100,12 +104,13 @@ public class ItemDAO {
     }
 
     // READ one item by ID
-    public Item loadItemById(int itemId) {
+    @Override
+    public Item loadByID(int ID) {
         String sql = "SELECT * FROM ITEM WHERE ITEM_ID = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, itemId);
+            ps.setInt(1, ID);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -126,7 +131,7 @@ public class ItemDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error loading item with ID: " + itemId);
+            System.out.println("Error loading item with ID: " + ID);
             e.printStackTrace();
         }
 
@@ -135,7 +140,7 @@ public class ItemDAO {
 
     // READ all items from database
     public ArrayList<Item> loadAllItems() {
-        ArrayList<Item> items = new ArrayList<>();
+        itemList = new ArrayList<>();
 
         String sql = "SELECT * FROM ITEM ORDER BY ITEM_ID";
 
@@ -163,7 +168,7 @@ public class ItemDAO {
             e.printStackTrace();
         }
 
-        return items;
+        return itemList;
     }
 
     // Check whether an item already exists
@@ -188,7 +193,8 @@ public class ItemDAO {
     }
 
     // DELETE item from database
-    public void deleteItem(Item item) {
+    @Override
+    public void delete(Item item) {
         String sql = "DELETE FROM ITEM WHERE ITEM_ID = ?";
         ItemSQLAdapter adapter = new ItemSQLAdapter(item);
         try (PreparedStatement ps = conn.prepareStatement(sql)) {

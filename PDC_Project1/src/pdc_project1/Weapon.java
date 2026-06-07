@@ -12,8 +12,9 @@ public class Weapon extends Item {
     
     int attackModifier;
     
-    public Weapon(String name, int attackModifier){
+    public Weapon( String name, int id, int attackModifier){
         super(name);
+        this.id = id;
         this.attackModifier = attackModifier;
     }
     
