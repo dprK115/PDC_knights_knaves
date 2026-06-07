@@ -137,7 +137,7 @@ public class DBManager {
                     System.out.println("Could not clear table: " + table);
 
                     // X0X05 = table does not exist in Derby
-                    if ("X0X05".equals(e.getSQLState())) {
+                    if ("42Y55".equals(e.getSQLState())) {
                         System.out.println(table + " does not exist yet.");
                     } else {
                         throw e;
@@ -146,7 +146,7 @@ public class DBManager {
             }
 
             conn.commit();
-            System.out.println("All database tables cleared.");
+            System.out.println("All database tables dropped.");
 
         } catch (SQLException e) {
             System.out.println("Error clearing database tables.");
