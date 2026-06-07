@@ -16,9 +16,18 @@ import pdc_project1.Potion;
 
 public class ItemSQLAdapter {
     
-    private final Item item;
+    private Item item;
 
     public ItemSQLAdapter(Item item) {
+        this.item = item;
+    }
+
+    public ItemSQLAdapter() {
+    }
+    
+    
+    
+    public void setItem(Item item){
         this.item = item;
     }
     

@@ -8,7 +8,6 @@ package database;
  *
  * @author lukea
  */
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,32 +17,41 @@ import java.util.ArrayList;
 import pdc_project1.Item;
 
 public class ItemDAO {
+
     private DBManager DBM;
+    private Connection conn;
 
     public ItemDAO(DBManager DBM) {
         this.DBM = DBM;
+        try {
+            this.conn = DBM.getConnection();
+        } catch (SQLException e) {
+            System.out.println("Error getting connection.");
+            e.printStackTrace();
+        }
+
     }
-    
-     public void saveItem(int itemId, Item item) {
-        if (itemExists(itemId)) {
-            updateItem(itemId, item);
+
+    public void saveItem(Item item) {
+        if (itemExists(item)) {
+            updateItem(item);
         } else {
-            insertItem(itemId, item);
+            insertItem(item);
         }
     }
 
     // INSERT item into database
-    public void insertItem(int itemId, Item item) {
+    public void insertItem(Item item) {
+
         ItemSQLAdapter adapter = new ItemSQLAdapter(item);
 
         String sql = "INSERT INTO ITEM "
                 + "(ITEM_ID, NAME, ITEM_TYPE, ATTACK_MODIFIER, DEFENSE_MODIFIER, HEAL_AMOUNT) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DBM.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, itemId);
+            ps.setInt(1, adapter.getID());
             ps.setString(2, adapter.getName());
             ps.setString(3, adapter.getItemType());
             ps.setInt(4, adapter.getAttackModifier());
@@ -61,7 +69,7 @@ public class ItemDAO {
     }
 
     // UPDATE item in database
-    public void updateItem(int itemId, Item item) {
+    public void updateItem(Item item) {
         ItemSQLAdapter adapter = new ItemSQLAdapter(item);
 
         String sql = "UPDATE ITEM SET "
@@ -72,15 +80,14 @@ public class ItemDAO {
                 + "HEAL_AMOUNT = ? "
                 + "WHERE ITEM_ID = ?";
 
-        try (Connection conn = DBM.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, adapter.getName());
             ps.setString(2, adapter.getItemType());
             ps.setInt(3, adapter.getAttackModifier());
             ps.setInt(4, adapter.getDefenseModifier());
             ps.setInt(5, adapter.getHealAmount());
-            ps.setInt(6, itemId);
+            ps.setInt(6, adapter.getID());
 
             ps.executeUpdate();
 
@@ -96,8 +103,7 @@ public class ItemDAO {
     public Item loadItemById(int itemId) {
         String sql = "SELECT * FROM ITEM WHERE ITEM_ID = ?";
 
-        try (Connection conn = DBM.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, itemId);
 
@@ -110,11 +116,11 @@ public class ItemDAO {
                     int healAmount = rs.getInt("HEAL_AMOUNT");
 
                     //return ItemFactory.createItem(
-                          //  itemType,
-                          //  name,
-                          //  attackModifier,
-                          //  defenseModifier,
-                           // healAmount
+                    //  itemType,
+                    //  name,
+                    //  attackModifier,
+                    //  defenseModifier,
+                    // healAmount
                     //);
                 }
             }
@@ -133,9 +139,7 @@ public class ItemDAO {
 
         String sql = "SELECT * FROM ITEM ORDER BY ITEM_ID";
 
-        try (Connection conn = DBM.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 String name = rs.getString("NAME");
@@ -145,14 +149,13 @@ public class ItemDAO {
                 int healAmount = rs.getInt("HEAL_AMOUNT");
 
                 //Item item = ItemFactory.createItem(
-                       // itemType,
-                        //name,
-                       // attackModifier,
-                       // defenseModifier,
-                       // healAmount
-               // );
-
-               // items.add(item);
+                // itemType,
+                //name,
+                // attackModifier,
+                // defenseModifier,
+                // healAmount
+                // );
+                // items.add(item);
             }
 
         } catch (SQLException e) {
@@ -164,13 +167,13 @@ public class ItemDAO {
     }
 
     // Check whether an item already exists
-    public boolean itemExists(int itemId) {
+    public boolean itemExists(Item item) {
+        ItemSQLAdapter adapter = new ItemSQLAdapter(item);
         String sql = "SELECT ITEM_ID FROM ITEM WHERE ITEM_ID = ?";
 
-        try (Connection conn = DBM.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, itemId);
+            ps.setInt(1, adapter.getID());
 
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
@@ -185,20 +188,19 @@ public class ItemDAO {
     }
 
     // DELETE item from database
-    public void deleteItem(int itemId) {
+    public void deleteItem(Item item) {
         String sql = "DELETE FROM ITEM WHERE ITEM_ID = ?";
+        ItemSQLAdapter adapter = new ItemSQLAdapter(item);
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        try (Connection conn = DBM.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, itemId);
+            ps.setInt(1, adapter.getID());
 
             int rowsDeleted = ps.executeUpdate();
 
             if (rowsDeleted > 0) {
                 System.out.println("Item deleted.");
             } else {
-                System.out.println("No item found with ID: " + itemId);
+                System.out.println("No item found with ID: " + adapter.getID());
             }
 
         } catch (SQLException e) {
@@ -206,6 +208,5 @@ public class ItemDAO {
             e.printStackTrace();
         }
     }
-    
-    
+
 }
