@@ -13,7 +13,8 @@ import java.util.List;
 
 public interface Dao <E>{
     
-    List<E> getAll();
+    List<E> loadAll();
+    boolean elementExists(E e);
     void save(E e);
     void update(E e);
     void insert(E e);

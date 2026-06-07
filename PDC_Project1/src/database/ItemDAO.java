@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import pdc_project1.ItemFactory;
 import pdc_project1.Item;
 
 public class ItemDAO implements Dao<Item> {
@@ -35,7 +36,7 @@ public class ItemDAO implements Dao<Item> {
 
     @Override
     public void save(Item item) {
-        if (itemExists(item)) {
+        if (elementExists(item)) {
             update(item);
         } else {
             insert(item);
@@ -114,19 +115,21 @@ public class ItemDAO implements Dao<Item> {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                    int itemID = rs.getInt("ITEM_ID");
                     String name = rs.getString("NAME");
                     String itemType = rs.getString("ITEM_TYPE");
                     int attackModifier = rs.getInt("ATTACK_MODIFIER");
                     int defenseModifier = rs.getInt("DEFENSE_MODIFIER");
                     int healAmount = rs.getInt("HEAL_AMOUNT");
 
-                    //return ItemFactory.createItem(
-                    //  itemType,
-                    //  name,
-                    //  attackModifier,
-                    //  defenseModifier,
-                    // healAmount
-                    //);
+                    return ItemFactory.createItem(
+                            itemID,
+                            itemType,
+                            name,
+                            attackModifier,
+                            defenseModifier,
+                            healAmount
+                    );
                 }
             }
 
@@ -139,7 +142,8 @@ public class ItemDAO implements Dao<Item> {
     }
 
     // READ all items from database
-    public ArrayList<Item> loadAllItems() {
+    @Override
+    public ArrayList<Item> loadAll() {
         itemList = new ArrayList<>();
 
         String sql = "SELECT * FROM ITEM ORDER BY ITEM_ID";
@@ -147,20 +151,22 @@ public class ItemDAO implements Dao<Item> {
         try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
+                int itemID = rs.getInt("ITEM_ID");
                 String name = rs.getString("NAME");
                 String itemType = rs.getString("ITEM_TYPE");
                 int attackModifier = rs.getInt("ATTACK_MODIFIER");
                 int defenseModifier = rs.getInt("DEFENSE_MODIFIER");
                 int healAmount = rs.getInt("HEAL_AMOUNT");
 
-                //Item item = ItemFactory.createItem(
-                // itemType,
-                //name,
-                // attackModifier,
-                // defenseModifier,
-                // healAmount
-                // );
-                // items.add(item);
+                Item item = ItemFactory.createItem(
+                        itemID,
+                        itemType,
+                        name,
+                        attackModifier,
+                        defenseModifier,
+                        healAmount
+                );
+                itemList.add(item);
             }
 
         } catch (SQLException e) {
@@ -172,7 +178,8 @@ public class ItemDAO implements Dao<Item> {
     }
 
     // Check whether an item already exists
-    public boolean itemExists(Item item) {
+    @Override
+    public boolean elementExists(Item item) {
         ItemSQLAdapter adapter = new ItemSQLAdapter(item);
         String sql = "SELECT ITEM_ID FROM ITEM WHERE ITEM_ID = ?";
 
