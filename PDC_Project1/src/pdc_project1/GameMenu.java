@@ -18,7 +18,7 @@ public class GameMenu extends Game {
     public void gameMenuStart() {
         encounter = manager.getCurrentEncounter();
         while (gameMenuFlag && encounter != null) {
-
+            encounter = manager.getNextEncounter();
             encounter.start(player);
             option = true;
             while (option) {
@@ -31,7 +31,7 @@ public class GameMenu extends Game {
                  
                 switch (userInput) {
                     case 1:
-                        encounter = manager.getNextEncounter();
+                        
                         encounter = manager.getCurrentEncounter();
                         option = false;
                         break;

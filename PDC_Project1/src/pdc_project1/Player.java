@@ -13,33 +13,33 @@ public class Player extends Character implements CanEquip, CanUse {
     Inventory inventory = new Inventory();
     Item equippedArmor = new Armor("Dirty Clothes", 0);
     Item equippedWeapon = new Weapon("Fists", 0);
+    static int difficultyModifier = difficulty.PlayerModifier;
+    static int xpModifier = difficulty.xpModifier;
     int nextLevelXp;
-   
 
     public Player(String name) {
         super(name);
-        this.maxHealth = 50;
+        this.level = 1;
+        this.maxHealth = level * difficultyModifier;
         this.health = maxHealth;
         this.attack = 10;
         this.defense = 5;
         this.xp = 0;
-        this.level = 1;
-        this.nextLevelXp = level * 5;
+        this.nextLevelXp = level * xpModifier;
     }
 
     public void levelUp() {
 
-        if (xp >= level * 5) {
+        if (xp >= level * xpModifier) {
             this.maxHealth += 100;
             this.health = maxHealth;
             this.attack += 10;
             this.defense += 10;
             System.out.println("You leveled up");
-        }else{
+        } else {
             System.out.println("you are " + ((nextLevelXp) - xp) + " xp away from leveling up");
         }  // reworking level up system to be xp point based.
 
-        
     }
 
     public void getStatCard() {
@@ -59,7 +59,6 @@ public class Player extends Character implements CanEquip, CanUse {
         System.out.println("Armor:       "
                 + (equippedArmor != null ? equippedArmor.name : "None"));
 
-        
         System.out.println("=================================");
     }
 
