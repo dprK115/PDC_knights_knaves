@@ -11,8 +11,8 @@ package pdc_project1;
 public class Player extends Character implements CanEquip, CanUse {
 
     Inventory inventory = new Inventory();
-    Item equippedArmor = new Armor("Dirty Clothes", 0);
-    Item equippedWeapon = new Weapon("Fists", 0);
+    Item equippedArmor = new Armor("Dirty Clothes", 0, 0);
+    Item equippedWeapon = new Weapon("Fists", 0, 0);
     static int difficultyModifier = difficulty.PlayerModifier;
     static int xpModifier = difficulty.xpModifier;
     int nextLevelXp;

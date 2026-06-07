@@ -1,13 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-
-/**
- *
- * @author lukea
- */
 package database;
 
 import java.sql.Connection;
@@ -16,17 +6,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import pdc_project1.Inventory;
 import pdc_project1.Item;
 
-public class InventoryDAO implements Dao<InventoryEntry> {
+public class InventoryDAO implements Dao<Inventory> {
 
-    private ArrayList<InventoryEntry> inventoryList;
     private DBManager DBM;
     private Connection conn;
     private ItemDAO itemDAO;
 
-    public InventoryDAO(DBManager DBM) {
+    // This is the player whose inventory is being saved/loaded
+    private int playerID;
+
+    public InventoryDAO(DBManager DBM, int playerID) {
         this.DBM = DBM;
+        this.playerID = playerID;
 
         try {
             this.conn = DBM.getConnection();
@@ -38,65 +32,66 @@ public class InventoryDAO implements Dao<InventoryEntry> {
     }
 
     @Override
-    public void save(InventoryEntry entry) {
-        if (elementExists(entry)) {
-            update(entry);
+    public void save(Inventory inventory) {
+        if (elementExists(inventory)) {
+            update(inventory);
         } else {
-            insert(entry);
+            insert(inventory);
         }
     }
 
     @Override
-    public void insert(InventoryEntry entry) {
+    public void insert(Inventory inventory) {
+        InventorySQLAdapter adapter = new InventorySQLAdapter(playerID, inventory);
+
         String sql = "INSERT INTO INVENTORY "
-                + "(INVENTORY_ID, PLAYER_ID, ITEM_ID, QUANTITY) "
-                + "VALUES (?, ?, ?, ?)";
+                + "(PLAYER_ID, INVENTORY_INDEX, ITEM_ID) "
+                + "VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, entry.getInventoryID());
-            ps.setInt(2, entry.getPlayerID());
-            ps.setInt(3, entry.getItem().getID());
-            ps.setInt(4, entry.getQuantity());
+            for (int i = 0; i < adapter.getInventorySize(); i++) {
+                ps.setInt(1, adapter.getPlayerID());
+                ps.setInt(2, adapter.getInventoryIndex(i));
+                ps.setInt(3, adapter.getItemID(i));
 
-            ps.executeUpdate();
+                ps.executeUpdate();
+            }
 
-            System.out.println("Inventory item inserted: " + entry.getItem().getName());
+            System.out.println("Inventory inserted for player ID: " + adapter.getPlayerID());
 
         } catch (SQLException e) {
-            System.out.println("Error inserting inventory item.");
+            System.out.println("Error inserting inventory.");
             e.printStackTrace();
         }
     }
 
     @Override
-    public void update(InventoryEntry entry) {
-        String sql = "UPDATE INVENTORY SET "
-                + "PLAYER_ID = ?, "
-                + "ITEM_ID = ?, "
-                + "QUANTITY = ? "
-                + "WHERE INVENTORY_ID = ?";
+    public void update(Inventory inventory) {
+        /*
+         * Simplest and safest update method:
+         * 1. Delete old inventory rows for the player
+         * 2. Re-insert the current ArrayList<Item>
+         */
+        delete(inventory);
+        insert(inventory);
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, entry.getPlayerID());
-            ps.setInt(2, entry.getItem().getID());
-            ps.setInt(3, entry.getQuantity());
-            ps.setInt(4, entry.getInventoryID());
-
-            ps.executeUpdate();
-
-            System.out.println("Inventory item updated: " + entry.getItem().getName());
-
-        } catch (SQLException e) {
-            System.out.println("Error updating inventory item.");
-            e.printStackTrace();
-        }
+        System.out.println("Inventory updated for player ID: " + playerID);
     }
 
     @Override
-    public InventoryEntry loadByID(int id) {
-        String sql = "SELECT * FROM INVENTORY WHERE INVENTORY_ID = ?";
+    public Inventory loadByID(int id) {
+        /*
+         * Here, id means PLAYER_ID.
+         * It loads all inventory rows for that player and rebuilds
+         * the Inventory ArrayList<Item>.
+         */
+
+        Inventory inventory = new Inventory();
+
+        String sql = "SELECT ITEM_ID FROM INVENTORY "
+                + "WHERE PLAYER_ID = ? "
+                + "ORDER BY INVENTORY_INDEX";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -104,112 +99,67 @@ public class InventoryDAO implements Dao<InventoryEntry> {
 
             try (ResultSet rs = ps.executeQuery()) {
 
-                if (rs.next()) {
-                    int inventoryID = rs.getInt("INVENTORY_ID");
-                    int playerID = rs.getInt("PLAYER_ID");
+                while (rs.next()) {
                     int itemID = rs.getInt("ITEM_ID");
-                    int quantity = rs.getInt("QUANTITY");
 
                     Item item = itemDAO.loadByID(itemID);
 
-                    return new InventoryEntry(inventoryID, playerID, item, quantity);
+                    if (item != null) {
+                        inventory.addItem(item);
+                    }
                 }
             }
 
         } catch (SQLException e) {
-            System.out.println("Error loading inventory item with ID: " + id);
+            System.out.println("Error loading inventory for player ID: " + id);
             e.printStackTrace();
         }
 
-        return null;
+        return inventory;
     }
 
     @Override
-    public ArrayList<InventoryEntry> loadAll() {
-        inventoryList = new ArrayList<>();
+    public ArrayList<Inventory> loadAll() {
+        /*
+         * This loads one Inventory object for each distinct player ID.
+         * Usually your game only has one player, so loadByID(playerID)
+         * is what you will use most often.
+         */
 
-        String sql = "SELECT * FROM INVENTORY ORDER BY INVENTORY_ID";
+        ArrayList<Inventory> inventories = new ArrayList<>();
 
-        try (PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        String sql = "SELECT DISTINCT PLAYER_ID FROM INVENTORY ORDER BY PLAYER_ID";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                int inventoryID = rs.getInt("INVENTORY_ID");
-                int playerID = rs.getInt("PLAYER_ID");
-                int itemID = rs.getInt("ITEM_ID");
-                int quantity = rs.getInt("QUANTITY");
-
-                Item item = itemDAO.loadByID(itemID);
-
-                InventoryEntry entry = new InventoryEntry(
-                        inventoryID,
-                        playerID,
-                        item,
-                        quantity
-                );
-
-                inventoryList.add(entry);
+                int foundPlayerID = rs.getInt("PLAYER_ID");
+                Inventory inventory = loadByID(foundPlayerID);
+                inventories.add(inventory);
             }
 
         } catch (SQLException e) {
-            System.out.println("Error loading all inventory items.");
+            System.out.println("Error loading all inventories.");
             e.printStackTrace();
         }
 
-        return inventoryList;
+        return inventories;
     }
 
-    public ArrayList<InventoryEntry> loadByPlayerID(int playerID) {
-        ArrayList<InventoryEntry> playerInventory = new ArrayList<>();
-
-        String sql = "SELECT * FROM INVENTORY WHERE PLAYER_ID = ? ORDER BY INVENTORY_ID";
+    @Override
+    public boolean elementExists(Inventory inventory) {
+        String sql = "SELECT PLAYER_ID FROM INVENTORY WHERE PLAYER_ID = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, playerID);
 
             try (ResultSet rs = ps.executeQuery()) {
-
-                while (rs.next()) {
-                    int inventoryID = rs.getInt("INVENTORY_ID");
-                    int itemID = rs.getInt("ITEM_ID");
-                    int quantity = rs.getInt("QUANTITY");
-
-                    Item item = itemDAO.loadByID(itemID);
-
-                    InventoryEntry entry = new InventoryEntry(
-                            inventoryID,
-                            playerID,
-                            item,
-                            quantity
-                    );
-
-                    playerInventory.add(entry);
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error loading inventory for player ID: " + playerID);
-            e.printStackTrace();
-        }
-
-        return playerInventory;
-    }
-
-    @Override
-    public boolean elementExists(InventoryEntry entry) {
-        String sql = "SELECT INVENTORY_ID FROM INVENTORY WHERE INVENTORY_ID = ?";
-
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, entry.getInventoryID());
-
-            try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
             }
 
         } catch (SQLException e) {
-            System.out.println("Error checking inventory item existence.");
+            System.out.println("Error checking inventory existence.");
             e.printStackTrace();
         }
 
@@ -217,23 +167,24 @@ public class InventoryDAO implements Dao<InventoryEntry> {
     }
 
     @Override
-    public void delete(InventoryEntry entry) {
-        String sql = "DELETE FROM INVENTORY WHERE INVENTORY_ID = ?";
+    public void delete(Inventory inventory) {
+        /*
+         * Since the INVENTORY table stores rows by PLAYER_ID,
+         * deleting an inventory means deleting all rows for that player.
+         */
+
+        String sql = "DELETE FROM INVENTORY WHERE PLAYER_ID = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, entry.getInventoryID());
+            ps.setInt(1, playerID);
 
             int rowsDeleted = ps.executeUpdate();
 
-            if (rowsDeleted > 0) {
-                System.out.println("Inventory item deleted.");
-            } else {
-                System.out.println("No inventory item found with ID: " + entry.getInventoryID());
-            }
+            System.out.println(rowsDeleted + " inventory entries deleted for player ID: " + playerID);
 
         } catch (SQLException e) {
-            System.out.println("Error deleting inventory item.");
+            System.out.println("Error deleting inventory.");
             e.printStackTrace();
         }
     }
@@ -244,9 +195,10 @@ public class InventoryDAO implements Dao<InventoryEntry> {
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, playerID);
-            ps.executeUpdate();
 
-            System.out.println("Inventory deleted for player ID: " + playerID);
+            int rowsDeleted = ps.executeUpdate();
+
+            System.out.println(rowsDeleted + " inventory entries deleted for player ID: " + playerID);
 
         } catch (SQLException e) {
             System.out.println("Error deleting inventory for player ID: " + playerID);
