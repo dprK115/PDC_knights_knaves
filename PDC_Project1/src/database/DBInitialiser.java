@@ -87,6 +87,7 @@ public class DBInitialiser {
                 + "ENCOUNTER_TEXT VARCHAR(500), "
                 + "ENEMY_NAME VARCHAR(50), "
                 + "LOOT_ITEM_ID INT,"
+                + "ENEMY_LEVEL INT,"
                 + "FOREIGN KEY (LOOT_ITEM_ID) REFERENCES ITEM(ITEM_ID)"
                 + ")";
 

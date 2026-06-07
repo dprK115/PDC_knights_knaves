@@ -1,0 +1,31 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package pdc_project1;
+
+/**
+ *
+ * @author lukea
+ */
+public class EncounterFactory {
+
+    public static Encounter createEncounter(
+            String encounterType,
+            Player player,
+            String storyText,
+            Enemy enemy,
+            Item loot
+    ) {
+
+        if (encounterType.equalsIgnoreCase("STORY")) {
+            return new Story(storyText);
+        }
+
+        if (encounterType.equalsIgnoreCase("COMBAT")) {
+            return new Combat(player, enemy, loot);
+        }
+
+        throw new IllegalArgumentException("Invalid encounter type: " + encounterType);
+    }
+}

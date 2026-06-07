@@ -22,6 +22,16 @@ public class Combat extends Encounter {
         this.gainedXp = enemy.xp;
         
     }
+
+    public Enemy getEnemy() {
+        return enemy;
+    }
+
+    public Item getLoot() {
+        return loot;
+    }
+    
+    
     
     @Override
     public void start(Player player){
