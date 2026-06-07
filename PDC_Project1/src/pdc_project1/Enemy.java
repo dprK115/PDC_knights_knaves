@@ -20,6 +20,11 @@ public class Enemy extends Character{
         this.level = level;
         this.xp = level * difficulty.xpModifier;
     }
+
+    public int getLevel() {
+        return level;
+    }
+    
     
     @Override
     public void attack(Character Enemy){
@@ -41,4 +46,7 @@ public class Enemy extends Character{
     public void undefend(){
         this.defense -= 5; 
     }
+    
+    
+    
 }

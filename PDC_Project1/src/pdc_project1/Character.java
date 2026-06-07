@@ -21,6 +21,7 @@ public abstract class Character implements Serializable {
     int level; // adding levels to all characters
     static DifficultySet difficulty = Game.difficultySet; // adding difficulty to game
     
+    
     public Character(String name) {
         this.name = name;
     }

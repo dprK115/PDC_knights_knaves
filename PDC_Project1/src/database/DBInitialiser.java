@@ -62,8 +62,8 @@ public class DBInitialiser {
         String sql = "CREATE TABLE INVENTORY ("
                 + "PLAYER_ID INT, "
                 + "ITEM_ID INT, "
-                + "QUANTITY INT, "
-                + "PRIMARY KEY (PLAYER_ID, ITEM_ID),"
+                + "INVENTORY_INDEX INT, "
+                + "PRIMARY KEY (INVENTORY_INDEX),"
                 + "FOREIGN KEY (PLAYER_ID) REFERENCES PLAYER(PLAYER_ID), "
                 + "FOREIGN KEY (ITEM_ID) REFERENCES ITEM(ITEM_ID)"
                 + ")";
@@ -87,6 +87,7 @@ public class DBInitialiser {
                 + "ENCOUNTER_TEXT VARCHAR(500), "
                 + "ENEMY_NAME VARCHAR(50), "
                 + "LOOT_ITEM_ID INT,"
+                + "ENEMY_LEVEL INT,"
                 + "FOREIGN KEY (LOOT_ITEM_ID) REFERENCES ITEM(ITEM_ID)"
                 + ")";
 

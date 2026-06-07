@@ -12,7 +12,7 @@ public class Combat extends Encounter {
     
     Player player;
     Enemy enemy;
-    Item loot;
+    public Item loot;
     int gainedXp;
     
     public Combat(Player player, Enemy enemy, Item loot){
@@ -22,6 +22,16 @@ public class Combat extends Encounter {
         this.gainedXp = enemy.xp;
         
     }
+
+    public Enemy getEnemy() {
+        return enemy;
+    }
+
+    public Item getLoot() {
+        return loot;
+    }
+    
+    
     
     @Override
     public void start(Player player){
