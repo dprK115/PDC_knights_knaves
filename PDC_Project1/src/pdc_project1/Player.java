@@ -17,6 +17,7 @@ public class Player extends Character implements CanEquip, CanUse {
     static int xpModifier = difficulty.xpModifier;
     int nextLevelXp;
     int id;
+    int currentStoryIndex;
 
     public Player(String name) {
         super(name);

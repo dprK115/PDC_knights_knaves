@@ -14,28 +14,14 @@ public class SaveManager {
     private static final String SAVE_FILE = "save.dat";
     
     public static void saveGame(GameState gameState){
-        try (ObjectOutputStream out =
-                     new ObjectOutputStream(new FileOutputStream(SAVE_FILE))) {
-
-            out.writeObject(gameState);
-            System.out.println("Game saved successfully.");
-
-        } catch (IOException e) {
-            System.out.println("Error saving game.");
-            e.printStackTrace();
-        }
+        GameSaver gs = new GameSaver(gameState);
+        gs.SaveGame();
     }
     
-    public static GameState loadGame() {
-        try (ObjectInputStream in =
-                     new ObjectInputStream(new FileInputStream(SAVE_FILE))) {
-
-            System.out.println("Game loaded successfully.");
-            return (GameState) in.readObject();
-
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("No save file found or save file is invalid.");
-            return null;
-        }
+    public static GameState loadGame(int playerID) {
+        SaveLoader sl = new SaveLoader();
+        GameState gs = sl.loadSave(playerID);
+        return gs;
+        
     }
 }

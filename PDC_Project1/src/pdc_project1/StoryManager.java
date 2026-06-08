@@ -14,9 +14,20 @@ import java.io.Serializable;
 public class StoryManager implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    ArrayList<Encounter> encounters = new ArrayList<>();
+    ArrayList<Encounter> encounters;
     int index = 0;
 
+    public StoryManager(ArrayList<Encounter> encounters) {
+    this.encounters = encounters;
+    }
+
+    public StoryManager() {
+        this.encounters = new ArrayList();
+    }
+
+    
+    
+    
     public void addEncounter(Encounter e) {
         encounters.add(e);
     }
