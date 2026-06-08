@@ -8,7 +8,7 @@ package pdc_project1;
  *
  * @author lukea
  */
-import java.io.*;
+import java.util.List;
 
 public class SaveManager {
     private static final String SAVE_FILE = "save.dat";
@@ -23,5 +23,9 @@ public class SaveManager {
         GameState gs = sl.loadSave(playerID);
         return gs;
         
+    }
+    public List getSaveList(){
+        SaveLoader sl = new SaveLoader();
+        return sl.getSaveList();
     }
 }

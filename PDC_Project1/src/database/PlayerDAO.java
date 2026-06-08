@@ -52,7 +52,7 @@ public class PlayerDAO implements Dao<Player> {
         PlayerSQLAdapter adapter = new PlayerSQLAdapter(player);
 
         String sql = "INSERT INTO PLAYER "
-                + "(PLAYER_ID, NAME, LEVEL, HEALTH, EQUIPPED_WEAPON_ID, EQUIPPED_ARMOR_ID, XP, DIFFICULTY, CURRENT_STORY_INDEX) "
+                + "(PLAYER_ID, NAME, LEVEL, HEALTH, EQUIPPED_WEAPON_ID, EQUIPPED_ARMOR_ID, XP, DIFFICULTY, CURRENT_ENCOUNTER_INDEX) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -100,7 +100,7 @@ public class PlayerDAO implements Dao<Player> {
                 + "EQUIPPED_ARMOR_ID = ?, "
                 + "XP = ?, "
                 + "DIFFICULTY = ?, "
-                +"CURRENT_STORY_INDEX = ?"
+                + "CURRENT_ENCOUNTER_INDEX = ?"
                 + "WHERE PLAYER_ID = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -125,7 +125,6 @@ public class PlayerDAO implements Dao<Player> {
             ps.setInt(7, adapter.getDifficulty());
             ps.setInt(8, adapter.getCurrentStoryIndex());
             ps.setInt(9, adapter.getPlayerID());
-            
 
             int rowsUpdated = ps.executeUpdate();
 
@@ -158,7 +157,8 @@ public class PlayerDAO implements Dao<Player> {
                     int health = rs.getInt("HEALTH");
                     int xp = rs.getInt("XP");
                     int difficulty = rs.getInt("DIFFICULTY");
-                    int currentStoryIndex = rs.getInt("CURRENT_STORY_INDEX");
+                    System.out.println("DEBUG difficulty from DB = " + difficulty);
+                    int currentStoryIndex = rs.getInt("CURRENT_ENCOUNTER_INDEX");
                     int weaponID = rs.getInt("EQUIPPED_WEAPON_ID");
                     boolean weaponWasNull = rs.wasNull();
 
@@ -183,8 +183,9 @@ public class PlayerDAO implements Dao<Player> {
                     player.setLevel(level);
                     player.setHealth(health);
                     player.setXp(xp);
+
                     player.setDifficulty(difficulty);
-                    player.setEncounterIndex(id);
+                    player.setEncounterIndex(currentStoryIndex);
 
                     if (weapon != null) {
                         player.setEquippedWeapon((Weapon) weapon);

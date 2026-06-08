@@ -42,7 +42,7 @@ public class DifficultySet {
                 return convertedDifficulty;
             }
             default -> {
-                return null;
+                return Difficulty.EASY;
             }
         }
     }
