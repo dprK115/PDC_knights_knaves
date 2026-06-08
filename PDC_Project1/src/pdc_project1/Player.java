@@ -59,6 +59,12 @@ public class Player extends Character implements CanEquip, CanUse {
         return id;
     }
 
+    public void setID(int id) {
+        this.id = id;
+    }
+
+
+
     
     
     public void getStatCard() {

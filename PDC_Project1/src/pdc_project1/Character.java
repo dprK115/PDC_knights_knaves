@@ -19,7 +19,7 @@ public abstract class Character implements Serializable {
     public int maxHealth;
     public int xp; // adding xp to all characters
     int level; // adding levels to all characters
-    static DifficultySet difficulty = Game.difficultySet; // adding difficulty to game
+    static DifficultySet difficulty; // adding difficulty to game
     
     
     public Character(String name) {
@@ -58,7 +58,11 @@ public abstract class Character implements Serializable {
         this.health = health;
     }
 
-    
+    public void setDifficulty(int difficultyValue){
+        Difficulty convertedDifficulty;
+        difficulty = new DifficultySet(convertedDifficulty);
+        
+    }
     
     public abstract void attack(Character Enemy);
     public abstract void defend();

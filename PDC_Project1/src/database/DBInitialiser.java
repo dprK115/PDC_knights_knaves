@@ -37,7 +37,7 @@ public class DBInitialiser {
                 + "EQUIPPED_WEAPON_ID INT, "
                 + "EQUIPPED_ARMOR_ID INT,"
                 + "XP INT,"
-                + "DIFFICULTY VARCHAR(20),"
+                + "DIFFICULTY INT,"
                 + "FOREIGN KEY (EQUIPPED_WEAPON_ID) REFERENCES ITEM(ITEM_ID),"
                 + "FOREIGN KEY (EQUIPPED_ARMOR_ID) REFERENCES ITEM(ITEM_ID)"
                 + ")";

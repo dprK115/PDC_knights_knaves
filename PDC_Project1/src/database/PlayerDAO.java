@@ -76,7 +76,7 @@ public class PlayerDAO implements Dao<Player> {
             }
 
             ps.setInt(7, adapter.getXp());
-            ps.setString(8, adapter.getDifficulty());
+            ps.setInt(8, adapter.getDifficulty());
 
             ps.executeUpdate();
 
@@ -121,7 +121,7 @@ public class PlayerDAO implements Dao<Player> {
             }
 
             ps.setInt(6, adapter.getXp());
-            ps.setString(7, adapter.getDifficulty());
+            ps.setInt(7, adapter.getDifficulty());
             ps.setInt(8, adapter.getPlayerID());
 
             int rowsUpdated = ps.executeUpdate();
@@ -154,7 +154,7 @@ public class PlayerDAO implements Dao<Player> {
                     int level = rs.getInt("LEVEL");
                     int health = rs.getInt("HEALTH");
                     int xp = rs.getInt("XP");
-                    String difficulty = rs.getString("DIFFICULTY");
+                    int difficulty = rs.getInt("DIFFICULTY");
 
                     int weaponID = rs.getInt("EQUIPPED_WEAPON_ID");
                     boolean weaponWasNull = rs.wasNull();
@@ -173,9 +173,9 @@ public class PlayerDAO implements Dao<Player> {
                         armor = itemDAO.loadByID(armorID);
                     }
 
-                    Player player = new Player();
+                    Player player = new Player(name);
 
-                    player.setPlayerID(playerID);
+                    player.setID(playerID);
                     player.setName(name);
                     player.setLevel(level);
                     player.setHealth(health);

@@ -14,15 +14,37 @@ public class DifficultySet {
     static int enemyModifier;
     static int PlayerModifier;
     static int xpModifier;
-    
-    
+
     public DifficultySet(Difficulty difficulty) {
         this.difficulty = difficulty;
         setDifficulty();
     }
 
-    private final void setDifficulty() {
-        switch (difficulty){
+    public DifficultySet(int difficulty) {
+        this.difficulty = difficultyConverter(difficulty);
+        setDifficulty();
+    }
+
+    private Difficulty difficultyConverter(int difficulty) {
+        Difficulty convertedDifficulty;
+
+        switch (difficulty) {
+            case 1:
+                convertedDifficulty = Difficulty.EASY;
+                return convertedDifficulty;
+            case 2:
+                convertedDifficulty = Difficulty.MEDIUM;
+                return convertedDifficulty;
+            case 3:
+                convertedDifficulty = Difficulty.HARD;
+                return convertedDifficulty;
+            default:
+                return null;
+        }
+    }
+
+    private void setDifficulty() {
+        switch (difficulty) {
             case EASY:
                 enemyModifier = 30;
                 PlayerModifier = 50;
@@ -40,6 +62,5 @@ public class DifficultySet {
                 break;
         }
     }
-    
-}
 
+}
