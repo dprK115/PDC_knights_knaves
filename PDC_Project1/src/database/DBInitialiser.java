@@ -24,7 +24,6 @@ public class DBInitialiser {
         createItemTable();
         createPlayerTable();
         createInventoryTable();
-        createStoryProgressTable();
         createEncounterTable();
     }
 
@@ -38,6 +37,7 @@ public class DBInitialiser {
                 + "EQUIPPED_ARMOR_ID INT,"
                 + "XP INT,"
                 + "DIFFICULTY INT,"
+                + "CURRENT_ENCOUNTER_INDEX INT,"
                 + "FOREIGN KEY (EQUIPPED_WEAPON_ID) REFERENCES ITEM(ITEM_ID),"
                 + "FOREIGN KEY (EQUIPPED_ARMOR_ID) REFERENCES ITEM(ITEM_ID)"
                 + ")";
@@ -69,15 +69,6 @@ public class DBInitialiser {
                 + ")";
 
         executeCreate(sql, "INVENTORY");
-    }
-
-    private void createStoryProgressTable() {
-        String sql = "CREATE TABLE STORY_PROGRESS ("
-                + "PLAYER_ID INT PRIMARY KEY, "
-                + "CURRENT_ENCOUNTER_INDEX INT"
-                + ")";
-
-        executeCreate(sql, "STORY_PROGRESS");
     }
 
     private void createEncounterTable() {

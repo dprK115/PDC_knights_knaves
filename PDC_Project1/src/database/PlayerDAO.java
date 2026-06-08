@@ -8,7 +8,6 @@ package database;
  *
  * @author lukea
  */
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,8 +52,8 @@ public class PlayerDAO implements Dao<Player> {
         PlayerSQLAdapter adapter = new PlayerSQLAdapter(player);
 
         String sql = "INSERT INTO PLAYER "
-                + "(PLAYER_ID, NAME, LEVEL, HEALTH, EQUIPPED_WEAPON_ID, EQUIPPED_ARMOR_ID, XP, DIFFICULTY) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                + "(PLAYER_ID, NAME, LEVEL, HEALTH, EQUIPPED_WEAPON_ID, EQUIPPED_ARMOR_ID, XP, DIFFICULTY, CURRENT_STORY_INDEX) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -77,6 +76,7 @@ public class PlayerDAO implements Dao<Player> {
 
             ps.setInt(7, adapter.getXp());
             ps.setInt(8, adapter.getDifficulty());
+            ps.setInt(9, adapter.getCurrentStoryIndex());
 
             ps.executeUpdate();
 
@@ -99,7 +99,8 @@ public class PlayerDAO implements Dao<Player> {
                 + "EQUIPPED_WEAPON_ID = ?, "
                 + "EQUIPPED_ARMOR_ID = ?, "
                 + "XP = ?, "
-                + "DIFFICULTY = ? "
+                + "DIFFICULTY = ?, "
+                +"CURRENT_STORY_INDEX = ?"
                 + "WHERE PLAYER_ID = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -122,7 +123,9 @@ public class PlayerDAO implements Dao<Player> {
 
             ps.setInt(6, adapter.getXp());
             ps.setInt(7, adapter.getDifficulty());
-            ps.setInt(8, adapter.getPlayerID());
+            ps.setInt(8, adapter.getCurrentStoryIndex());
+            ps.setInt(9, adapter.getPlayerID());
+            
 
             int rowsUpdated = ps.executeUpdate();
 
@@ -155,7 +158,7 @@ public class PlayerDAO implements Dao<Player> {
                     int health = rs.getInt("HEALTH");
                     int xp = rs.getInt("XP");
                     int difficulty = rs.getInt("DIFFICULTY");
-
+                    int currentStoryIndex = rs.getInt("CURRENT_STORY_INDEX");
                     int weaponID = rs.getInt("EQUIPPED_WEAPON_ID");
                     boolean weaponWasNull = rs.wasNull();
 
@@ -181,6 +184,7 @@ public class PlayerDAO implements Dao<Player> {
                     player.setHealth(health);
                     player.setXp(xp);
                     player.setDifficulty(difficulty);
+                    player.setEncounterIndex(id);
 
                     if (weapon != null) {
                         player.setEquippedWeapon((Weapon) weapon);
@@ -208,8 +212,7 @@ public class PlayerDAO implements Dao<Player> {
 
         String sql = "SELECT * FROM PLAYER ORDER BY PLAYER_ID";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 int playerID = rs.getInt("PLAYER_ID");

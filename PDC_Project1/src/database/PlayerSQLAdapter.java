@@ -10,6 +10,7 @@ package database;
  */
 import pdc_project1.Player;
 import pdc_project1.Item;
+import pdc_project1.Game;
 
 public class PlayerSQLAdapter {
 
@@ -21,6 +22,7 @@ public class PlayerSQLAdapter {
     private int equippedArmorID;
     private int xp;
     private int difficulty;
+    private int currentStoryIndex;
 
     public PlayerSQLAdapter(Player player) {
         this.playerID = player.getID();
@@ -29,6 +31,7 @@ public class PlayerSQLAdapter {
         this.health = player.getHealth();
         this.xp = player.getXp();
         this.difficulty = player.getDifficultyModifier();
+        this.currentStoryIndex = Game.manager.getIndex();
 
         Item equippedWeapon = player.getEquippedWeapon();
         Item equippedArmor = player.getEquippedArmor();
@@ -77,4 +80,10 @@ public class PlayerSQLAdapter {
     public int getDifficulty() {
         return difficulty;
     }
+
+    public int getCurrentStoryIndex() {
+        return currentStoryIndex;
+    }
+    
+    
 }

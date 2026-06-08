@@ -59,8 +59,7 @@ public abstract class Character implements Serializable {
     }
 
     public void setDifficulty(int difficultyValue){
-        Difficulty convertedDifficulty;
-        difficulty = new DifficultySet(convertedDifficulty);
+        difficulty = new DifficultySet(difficultyValue);
         
     }
     

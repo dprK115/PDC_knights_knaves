@@ -29,17 +29,21 @@ public class DifficultySet {
         Difficulty convertedDifficulty;
 
         switch (difficulty) {
-            case 1:
+            case 1 -> {
                 convertedDifficulty = Difficulty.EASY;
                 return convertedDifficulty;
-            case 2:
+            }
+            case 2 -> {
                 convertedDifficulty = Difficulty.MEDIUM;
                 return convertedDifficulty;
-            case 3:
+            }
+            case 3 -> {
                 convertedDifficulty = Difficulty.HARD;
                 return convertedDifficulty;
-            default:
+            }
+            default -> {
                 return null;
+            }
         }
     }
 
