@@ -54,7 +54,7 @@ public class EncounterDAO implements Dao<Encounter> {
         adapter = new EncounterSQLAdapter(encounter);
 
         String sql = "INSERT INTO ENCOUNTER "
-                + "(ENCOUNTER_ID, ENCOUNTER_TYPE, STORY_TEXT, ENEMY_NAME, ENEMY_LEVEL, LOOT_ITEM_ID) "
+                + "(ENCOUNTER_ID, ENCOUNTER_TYPE, ENCOUNTER_TEXT, ENEMY_NAME, ENEMY_LEVEL, LOOT_ITEM_ID) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -64,7 +64,13 @@ public class EncounterDAO implements Dao<Encounter> {
             ps.setString(3, adapter.getStoryText());
             ps.setString(4, adapter.getEnemyName());
             ps.setInt(5, adapter.getEnemyLevel());
-            ps.setInt(6, adapter.getLootItemID());
+            if(adapter.getLootItemID() > 0){
+                ps.setInt(6, adapter.getLootItemID());
+            }else{
+                ps.setNull(6, java.sql.Types.INTEGER);
+            }
+            
+            
 
             ps.executeUpdate();
 
@@ -83,7 +89,7 @@ public class EncounterDAO implements Dao<Encounter> {
 
         String sql = "UPDATE ENCOUNTER SET "
                 + "ENCOUNTER_TYPE = ?, "
-                + "STORY_TEXT = ?, "
+                + "ENCOUNTER_TEXT = ?, "
                 + "ENEMY_NAME = ?, "
                 + "ENEMY_LEVEL = ?, "
                 + "LOOT_ITEM_ID = ? "
@@ -95,7 +101,11 @@ public class EncounterDAO implements Dao<Encounter> {
             ps.setString(2, adapter.getStoryText());
             ps.setString(3, adapter.getEnemyName());
             ps.setInt(4, adapter.getEnemyLevel());
-            ps.setInt(5, adapter.getLootItemID());
+            if(adapter.getLootItemID() > 0){
+                ps.setInt(5, adapter.getLootItemID());
+            }else{
+                ps.setNull(5, java.sql.Types.INTEGER);
+            }
             ps.setInt(6, adapter.getEncounterID());
 
             int rowsUpdated = ps.executeUpdate();
@@ -124,7 +134,7 @@ public class EncounterDAO implements Dao<Encounter> {
 
                 if (rs.next()) {
                     String encounterType = rs.getString("ENCOUNTER_TYPE");
-                    String storyText = rs.getString("STORY_TEXT");
+                    String storyText = rs.getString("ENCOUNTER_TEXT");
                     String enemyName = rs.getString("ENEMY_NAME");
                     int enemyLevel = rs.getInt("ENEMY_LEVEL");
                     int lootItemID = rs.getInt("LOOT_ITEM_ID");
@@ -166,7 +176,7 @@ public class EncounterDAO implements Dao<Encounter> {
 
             while (rs.next()) {
                 String encounterType = rs.getString("ENCOUNTER_TYPE");
-                String storyText = rs.getString("STORY_TEXT");
+                String storyText = rs.getString("ENCOUNTER_TEXT");
                 String enemyName = rs.getString("ENEMY_NAME");
                 int enemyLevel = rs.getInt("ENEMY_LEVEL");
                 int lootItemID = rs.getInt("LOOT_ITEM_ID");

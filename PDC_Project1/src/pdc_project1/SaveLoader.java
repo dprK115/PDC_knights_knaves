@@ -58,7 +58,6 @@ public class SaveLoader {
     public List<Player> getSaveList() {
         dao = new PlayerDAO(dbm);
         List playerList = dao.loadAll();
-        dbm.closeConnection();
         return playerList;
 
     }
