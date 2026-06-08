@@ -10,11 +10,16 @@ package pdc_project1;
  */
 public class Story extends Encounter {
     
-    String text;
+    private String text;
     
     public Story(String text){
         this.text = text;
     }
+
+    public String getText() {
+        return text;
+    }
+    
     
     @Override
     public void start(Player player){

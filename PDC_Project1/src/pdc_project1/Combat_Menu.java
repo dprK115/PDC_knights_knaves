@@ -10,13 +10,16 @@ package pdc_project1;
  */
 
 import java.util.Scanner;
-
-public class Combat_Menu {
+// combat_menu extends Game now to use the same scanner that is opened in Game.java
+public class Combat_Menu extends Game {
     
-    Scanner scanner = new Scanner(System.in);
+    Character enemy;
+    Player player;
+    // changed parameter for this method to allow the use of the player and enemy objects already stored in Combat object.
+    public void startCombat(Combat combat){
     
-    public void startCombat(Player player, Enemy enemy){
-    
+        this.enemy = combat.enemy;
+        this.player = combat.player;
         while(player.health > 0 && enemy.health > 0){
             
             System.out.println("\n--- COMBAT ---");
@@ -27,7 +30,7 @@ public class Combat_Menu {
             System.out.println("2. Defend");
             System.out.println("3. Use Item");
             
-            int choice = scanner.nextInt();
+            int choice = input.nextInt();
             
             if(choice == 1){
                 player.attack(enemy);
@@ -45,7 +48,7 @@ public class Combat_Menu {
                 player.inventory.printInventory();
                 System.out.println("Choose item index:");
                 
-                int index = scanner.nextInt();
+                int index = input.nextInt();
                 
                 if(index >= 0 && index < player.inventory.items.size()){
                     
@@ -74,9 +77,14 @@ public class Combat_Menu {
                     break;
                 }
             }
+            if (choice == 2){
+                player.undefend();
+            }
             
-            player.undefend();
         }
+        player.xp += combat.gainedXp;
+        System.out.println("you defeated " + enemy.name + " and move forward");
+        player.levelUp();
         
         if(player.health < 0){
             System.out.println("You lost");

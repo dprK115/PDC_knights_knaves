@@ -14,10 +14,14 @@ import java.io.Serializable;
 
 public class Inventory implements Serializable{
     private static final long serialVersionUID = 1L;
-    ArrayList<Item> items = new ArrayList<>();
+    public ArrayList<Item> items = new ArrayList<>();
     
     public Inventory() {
         
+    }
+    
+    public ArrayList getItems(){
+        return items;
     }
     
     public Inventory(ArrayList<Item> savedInventory){
@@ -26,7 +30,7 @@ public class Inventory implements Serializable{
     
     public void addItem(Item item){
         items.add(item);
-        System.out.println("You picked up" + item);
+        System.out.println("You picked up " + item.name);
     }
     
     public void removeItem(Item item){

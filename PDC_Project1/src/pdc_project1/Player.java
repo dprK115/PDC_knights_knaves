@@ -11,23 +11,76 @@ package pdc_project1;
 public class Player extends Character implements CanEquip, CanUse {
 
     Inventory inventory = new Inventory();
-    Item equippedArmor = new Armor("Dirty Clothes", 0);
-    Item equippedWeapon = new Weapon("Fists", 0);
+    Item equippedArmor;
+    Item equippedWeapon;
+    static int difficultyModifier = difficulty.PlayerModifier;
+    static int xpModifier = difficulty.xpModifier;
+    int nextLevelXp;
+    int id;
+    int currentStoryIndex;
 
     public Player(String name) {
         super(name);
-        this.maxHealth = 50;
+        this.level = 1;
+        this.maxHealth = level * difficultyModifier;
         this.health = maxHealth;
         this.attack = 10;
         this.defense = 5;
+        this.xp = 0;
+        this.nextLevelXp = level * xpModifier;
+        equippedArmor = new Armor("Dirty Clothes", 0, 0);
+        equippedWeapon = new Weapon("Fists", 0, 0);
     }
 
     public void levelUp() {
-        this.maxHealth += 100;
-        this.attack += 10;
-        this.defense += 10;
+
+        if (xp >= level * xpModifier) {
+            this.maxHealth += 100;
+            this.health = maxHealth;
+            this.attack += 10;
+            this.defense += 10;
+            System.out.println("You leveled up");
+        } else {
+            System.out.println("you are " + ((nextLevelXp) - xp) + " xp away from leveling up");
+        }  // reworking level up system to be xp point based.
+
     }
 
+    public Item getEquippedArmor() {
+        return equippedArmor;
+    }
+
+    public Item getEquippedWeapon() {
+        return equippedWeapon;
+    }
+
+    public static int getDifficultyModifier() {
+        return difficultyModifier;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
+
+    public void setEquippedArmor(Item equippedArmor) {
+        this.equippedArmor = equippedArmor;
+    }
+
+    public void setEquippedWeapon(Item equippedWeapon) {
+        this.equippedWeapon = equippedWeapon;
+    }
+
+    public void setEncounterIndex(int index){
+        Game.manager.index = index;
+    }
+    
+
+    
+    
     public void getStatCard() {
         System.out.println("=================================");
         System.out.println("        PLAYER STAT CARD         ");
@@ -36,7 +89,7 @@ public class Player extends Character implements CanEquip, CanUse {
         System.out.println("Health:      " + health + "/" + maxHealth);
         System.out.println("Attack:      " + attack);
         System.out.println("Defense:     " + defense);
-
+        System.out.println("Level:       " + level);
         System.out.println("---------------------------------");
 
         System.out.println("Weapon:      "
@@ -73,8 +126,10 @@ public class Player extends Character implements CanEquip, CanUse {
     public void equip(int index) {
         if (inventory.items.get(index) instanceof Armor) {
             equippedArmor = inventory.items.get(index);
+            defense = equippedArmor.getStat();
         } else if (inventory.items.get(index) instanceof Weapon) {
             equippedWeapon = inventory.items.get(index);
+            attack = equippedWeapon.getStat(); //fixed bug where attack is set to equipped armor stat.
         }
     }
 

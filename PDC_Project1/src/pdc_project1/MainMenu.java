@@ -9,15 +9,15 @@ package pdc_project1;
  * @author lukea
  */
 
-import java.util.Scanner;
+
 public class MainMenu extends Game {
     public void mainMenuStart(){ 
     
-        Scanner input = new Scanner(System.in);
+        
         while (true){
             System.out.println("-----Knights And Knaves-----");
-            System.out.println("\n\n1. New Game");
-            System.out.println("\n2. Load Game");
+            System.out.println("\n1. New Game");
+            System.out.println("2. Load Game");
             System.out.println("3. Quit and Save Game");
             
             int userInput = input.nextInt();
@@ -26,6 +26,7 @@ public class MainMenu extends Game {
                 case 1:
                     CharacterCreation cc = new CharacterCreation();
                     player = cc.createMenu();
+                    initializeNewGame();
                     break;
                 case 2:
                     System.out.println("loading previous save file...");
@@ -49,7 +50,7 @@ public class MainMenu extends Game {
                 
                     
         }
-        input.close();
+        
     }
         
         
