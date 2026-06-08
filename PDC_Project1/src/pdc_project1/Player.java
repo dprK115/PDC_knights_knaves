@@ -16,6 +16,7 @@ public class Player extends Character implements CanEquip, CanUse {
     static int difficultyModifier = difficulty.PlayerModifier;
     static int xpModifier = difficulty.xpModifier;
     int nextLevelXp;
+    int id;
 
     public Player(String name) {
         super(name);
@@ -42,6 +43,24 @@ public class Player extends Character implements CanEquip, CanUse {
 
     }
 
+    public Item getEquippedArmor() {
+        return equippedArmor;
+    }
+
+    public Item getEquippedWeapon() {
+        return equippedWeapon;
+    }
+
+    public static int getDifficultyModifier() {
+        return difficultyModifier;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    
+    
     public void getStatCard() {
         System.out.println("=================================");
         System.out.println("        PLAYER STAT CARD         ");

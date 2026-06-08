@@ -19,6 +19,14 @@ public abstract class Item implements Serializable{
     this.name = name;
 }
     public abstract int getStat();
+
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
     
    
 }
