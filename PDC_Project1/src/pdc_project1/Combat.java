@@ -20,7 +20,6 @@ public class Combat extends Encounter {
         this.enemy = enemy;
         this.loot = loot;
         this.gainedXp = enemy.xp;
-        
     }
 
     public Enemy getEnemy() {

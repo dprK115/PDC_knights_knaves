@@ -11,6 +11,7 @@ package pdc_project1;
 public class EncounterFactory {
 
     public static Encounter createEncounter(
+            int encounterID,
             String encounterType,
             Player player,
             String storyText,
@@ -20,12 +21,16 @@ public class EncounterFactory {
     ) {
 
         if (encounterType.equalsIgnoreCase("STORY")) {
-            return new Story(storyText);
+            Story story = new Story(storyText);
+            story.setID(encounterID);
+            return story;
         }
 
         if (encounterType.equalsIgnoreCase("COMBAT")) {
             Enemy enemy = new Enemy(enemyName, enemyLevel);
-            return new Combat(player, enemy, loot);
+            Combat combat = new Combat(player, enemy, loot);
+            combat.setID(encounterID);
+            return combat;
         }
 
         throw new IllegalArgumentException("Invalid encounter type: " + encounterType);

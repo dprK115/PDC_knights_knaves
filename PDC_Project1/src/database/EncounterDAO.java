@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import pdc_project1.Combat;
 import pdc_project1.Encounter;
 import pdc_project1.EncounterFactory;
 import pdc_project1.Item;
@@ -43,7 +42,11 @@ public class EncounterDAO implements Dao<Encounter> {
 
     @Override
     public void save(Encounter encounter) {
-        insert(encounter);
+        if (elementExists(encounter)) {
+            update(encounter);
+        } else {
+            insert(encounter);
+        }
     }
 
     @Override
@@ -95,15 +98,18 @@ public class EncounterDAO implements Dao<Encounter> {
             ps.setInt(5, adapter.getLootItemID());
             ps.setInt(6, adapter.getEncounterID());
 
-            ps.executeUpdate();
+            int rowsUpdated = ps.executeUpdate();
 
-            System.out.println("Encounter updated with ID: " + encounterID);
+            if (rowsUpdated > 0) {
+                System.out.println("Encounter updated with ID: " + encounterID);
+            } else {
+                System.out.println("No encounter found with ID: " + encounterID);
+            }
 
         } catch (SQLException e) {
             System.out.println("Error updating encounter.");
             e.printStackTrace();
         }
-        System.out.println("Cannot update Encounter without an encounter ID.");
     }
 
     @Override
@@ -122,7 +128,8 @@ public class EncounterDAO implements Dao<Encounter> {
                     String enemyName = rs.getString("ENEMY_NAME");
                     int enemyLevel = rs.getInt("ENEMY_LEVEL");
                     int lootItemID = rs.getInt("LOOT_ITEM_ID");
-
+                    int encounterID = rs.getInt("ENCOUNTER_ID");
+                    
                     Item loot = null;
 
                     if (encounterType.equalsIgnoreCase("COMBAT")) {
@@ -130,6 +137,7 @@ public class EncounterDAO implements Dao<Encounter> {
                     }
 
                     return EncounterFactory.createEncounter(
+                            encounterID,
                             encounterType,
                             player,
                             storyText,
@@ -162,6 +170,7 @@ public class EncounterDAO implements Dao<Encounter> {
                 String enemyName = rs.getString("ENEMY_NAME");
                 int enemyLevel = rs.getInt("ENEMY_LEVEL");
                 int lootItemID = rs.getInt("LOOT_ITEM_ID");
+                int encounterID = rs.getInt("ENCOUNTER_ID");
 
                 Item loot = null;
 
@@ -170,6 +179,7 @@ public class EncounterDAO implements Dao<Encounter> {
                 }
 
                 Encounter encounter = EncounterFactory.createEncounter(
+                        encounterID,
                         encounterType,
                         player,
                         storyText,
@@ -233,6 +243,5 @@ public class EncounterDAO implements Dao<Encounter> {
             System.out.println("Error deleting encounter.");
             e.printStackTrace();
         }
-        System.out.println("Cannot delete Encounter without an encounter ID.");
     }
 }
