@@ -34,7 +34,7 @@ public class Game {
     }
 
     public void quit() {
-        System.out.println("Closing game, Thanks for Plaing");
+        System.out.println("Closing game, Thanks for Playing");
         input.close();
         System.exit(0);
     }
@@ -43,7 +43,7 @@ public class Game {
         manager.addEncounter(new Story("You wake up in a dark forest..."));
         manager.addEncounter(new Story("Ahead you spot a grotesque skeletal figure"));
         manager.addEncounter(new Story("As you venture closer you recognize him as Markus, one of Lord Danil's lesser undead knights, he spots you and charges"));
-        manager.addEncounter(new Combat(player, new Enemy("Markus", 2), new Armor("Armor of Sir Jean Paul Gautier", 25)));
+        manager.addEncounter(new Combat(player, new Enemy("Markus", 2), new Armor("Armor of Sir Jean Paul Gautier", 1, 25)));
         manager.addEncounter(new Story("You defeated Markus and move forward..."));
         manager.addEncounter(new Story("The dark forest abruptly ends and you gaze apon the plains you once held as your own"
                 + "\nHowever, it isnt as you remembered it, The once peaceful green windswept plains are now covered with an eternal darkness\nThe sun now a pale blue staining the air around with permanent twilight"
@@ -52,11 +52,11 @@ public class Game {
         manager.addEncounter(new Story("As you approach Castle Dior, you hear the creaking of undead bones patrolling the ramparts and peeking over the parapets."));
         manager.addEncounter(new Story("You enter the barren courtyard once full with the vitality of a thriving market"));
         manager.addEncounter(new Story("A Banshee's scream rips through the air\n I am Victoria and you have stolen my secret Armor and Slain my lover, prepare to die"));
-        manager.addEncounter(new Combat(player, new Enemy("Victoria", 2), new Weapon("Vampire's Bane", 50)));
+        manager.addEncounter(new Combat(player, new Enemy("Victoria", 2), new Weapon("Vampire's Bane", 2, 50)));
         manager.addEncounter(new Story("You defeated Victoria and move on to the keep"));
         manager.addEncounter(new Story("Outside the keep you hear pure evil barking orders,\nYou know its time to finish what you started all those years ago"));
         manager.addEncounter(new Story("As you push open the large wooden doors to the keep, You look to your throne where Danil currently sits\n I thought I got rid of you  40 years prior, yet you come crawling back here to evict me?\n Unfortunately for you, your fun ends here"));
-        manager.addEncounter(new Combat(player, new Enemy("Lord Danil", 3), new Armor("Viva la Vida", 100)));
+        manager.addEncounter(new Combat(player, new Enemy("Lord Danil", 3), new Armor("Viva la Vida", 3, 100)));
     }
 
 }

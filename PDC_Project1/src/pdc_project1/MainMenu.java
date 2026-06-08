@@ -30,7 +30,7 @@ public class MainMenu extends Game {
                     break;
                 case 2:
                     System.out.println("loading previous save file...");
-                    GameState loadedState = SaveManager.loadGame();
+                    GameState loadedState = SaveManager.loadGame(1);
                     if(loadedState != null){
                         player = loadedState.getPlayer();
                         manager = loadedState.getStoryManager();
