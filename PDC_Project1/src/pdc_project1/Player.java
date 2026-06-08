@@ -11,11 +11,12 @@ package pdc_project1;
 public class Player extends Character implements CanEquip, CanUse {
 
     Inventory inventory = new Inventory();
-    Item equippedArmor = new Armor("Dirty Clothes", 0, 0);
-    Item equippedWeapon = new Weapon("Fists", 0, 0);
+    Item equippedArmor;
+    Item equippedWeapon;
     static int difficultyModifier = difficulty.PlayerModifier;
     static int xpModifier = difficulty.xpModifier;
     int nextLevelXp;
+    int id;
 
     public Player(String name) {
         super(name);
@@ -26,6 +27,8 @@ public class Player extends Character implements CanEquip, CanUse {
         this.defense = 5;
         this.xp = 0;
         this.nextLevelXp = level * xpModifier;
+        equippedArmor = new Armor("Dirty Clothes", 0, 0);
+        equippedWeapon = new Weapon("Fists", 0, 0);
     }
 
     public void levelUp() {
@@ -42,6 +45,41 @@ public class Player extends Character implements CanEquip, CanUse {
 
     }
 
+    public Item getEquippedArmor() {
+        return equippedArmor;
+    }
+
+    public Item getEquippedWeapon() {
+        return equippedWeapon;
+    }
+
+    public static int getDifficultyModifier() {
+        return difficultyModifier;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
+
+    public void setEquippedArmor(Item equippedArmor) {
+        this.equippedArmor = equippedArmor;
+    }
+
+    public void setEquippedWeapon(Item equippedWeapon) {
+        this.equippedWeapon = equippedWeapon;
+    }
+
+    public void setEncounterIndex(int index){
+        Game.manager.index = index;
+    }
+    
+
+    
+    
     public void getStatCard() {
         System.out.println("=================================");
         System.out.println("        PLAYER STAT CARD         ");

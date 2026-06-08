@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Game {
 
     static Player player;
-    static StoryManager manager = new StoryManager();
+    public static StoryManager manager = new StoryManager();
     static SaveManager sm = new SaveManager();
     static MainMenu mainMenu = new MainMenu();
     static GameMenu gameMenu = new GameMenu();

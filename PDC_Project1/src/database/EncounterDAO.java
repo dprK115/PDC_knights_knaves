@@ -8,14 +8,12 @@ package database;
  *
  * @author lukea
  */
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import pdc_project1.Combat;
 import pdc_project1.Encounter;
 import pdc_project1.EncounterFactory;
 import pdc_project1.Item;
@@ -27,6 +25,7 @@ public class EncounterDAO implements Dao<Encounter> {
     private Connection conn;
     private ItemDAO itemDAO;
     private Player player;
+    EncounterSQLAdapter adapter;
 
     public EncounterDAO(DBManager DBM, Player player) {
         this.DBM = DBM;
@@ -43,18 +42,16 @@ public class EncounterDAO implements Dao<Encounter> {
 
     @Override
     public void save(Encounter encounter) {
-        /*
-         * Because Encounter currently does not store an encounterID,
-         * this will insert the encounter as new data.
-         */
-        insert(encounter);
+        if (elementExists(encounter)) {
+            update(encounter);
+        } else {
+            insert(encounter);
+        }
     }
 
     @Override
     public void insert(Encounter encounter) {
-        int encounterID = getNextEncounterID();
-
-        EncounterSQLAdapter adapter = new EncounterSQLAdapter( encounter);
+        adapter = new EncounterSQLAdapter(encounter);
 
         String sql = "INSERT INTO ENCOUNTER "
                 + "(ENCOUNTER_ID, ENCOUNTER_TYPE, STORY_TEXT, ENEMY_NAME, ENEMY_LEVEL, LOOT_ITEM_ID) "
@@ -81,15 +78,8 @@ public class EncounterDAO implements Dao<Encounter> {
 
     @Override
     public void update(Encounter encounter) {
-        /*
-         * This cannot work properly unless Encounter has an ID field.
-         * Use updateByID instead.
-         */
-        System.out.println("Cannot update Encounter without an encounter ID.");
-    }
-
-    public void updateByID(int encounterID, Encounter encounter) {
-        EncounterSQLAdapter adapter = new EncounterSQLAdapter( encounter);
+        adapter = new EncounterSQLAdapter(encounter);
+        int encounterID = adapter.getEncounterID();
 
         String sql = "UPDATE ENCOUNTER SET "
                 + "ENCOUNTER_TYPE = ?, "
@@ -108,9 +98,13 @@ public class EncounterDAO implements Dao<Encounter> {
             ps.setInt(5, adapter.getLootItemID());
             ps.setInt(6, adapter.getEncounterID());
 
-            ps.executeUpdate();
+            int rowsUpdated = ps.executeUpdate();
 
-            System.out.println("Encounter updated with ID: " + encounterID);
+            if (rowsUpdated > 0) {
+                System.out.println("Encounter updated with ID: " + encounterID);
+            } else {
+                System.out.println("No encounter found with ID: " + encounterID);
+            }
 
         } catch (SQLException e) {
             System.out.println("Error updating encounter.");
@@ -134,7 +128,8 @@ public class EncounterDAO implements Dao<Encounter> {
                     String enemyName = rs.getString("ENEMY_NAME");
                     int enemyLevel = rs.getInt("ENEMY_LEVEL");
                     int lootItemID = rs.getInt("LOOT_ITEM_ID");
-
+                    int encounterID = rs.getInt("ENCOUNTER_ID");
+                    
                     Item loot = null;
 
                     if (encounterType.equalsIgnoreCase("COMBAT")) {
@@ -142,6 +137,7 @@ public class EncounterDAO implements Dao<Encounter> {
                     }
 
                     return EncounterFactory.createEncounter(
+                            encounterID,
                             encounterType,
                             player,
                             storyText,
@@ -166,8 +162,7 @@ public class EncounterDAO implements Dao<Encounter> {
 
         String sql = "SELECT * FROM ENCOUNTER ORDER BY ENCOUNTER_ID";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 String encounterType = rs.getString("ENCOUNTER_TYPE");
@@ -175,6 +170,7 @@ public class EncounterDAO implements Dao<Encounter> {
                 String enemyName = rs.getString("ENEMY_NAME");
                 int enemyLevel = rs.getInt("ENEMY_LEVEL");
                 int lootItemID = rs.getInt("LOOT_ITEM_ID");
+                int encounterID = rs.getInt("ENCOUNTER_ID");
 
                 Item loot = null;
 
@@ -183,6 +179,7 @@ public class EncounterDAO implements Dao<Encounter> {
                 }
 
                 Encounter encounter = EncounterFactory.createEncounter(
+                        encounterID,
                         encounterType,
                         player,
                         storyText,
@@ -204,14 +201,8 @@ public class EncounterDAO implements Dao<Encounter> {
 
     @Override
     public boolean elementExists(Encounter encounter) {
-        /*
-         * Without encounterID inside Encounter, this cannot reliably check
-         * if this exact encounter exists.
-         */
-        return false;
-    }
-
-    public boolean elementExistsByID(int encounterID) {
+        adapter = new EncounterSQLAdapter(encounter);
+        int encounterID = adapter.getEncounterID();
         String sql = "SELECT ENCOUNTER_ID FROM ENCOUNTER WHERE ENCOUNTER_ID = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -232,14 +223,8 @@ public class EncounterDAO implements Dao<Encounter> {
 
     @Override
     public void delete(Encounter encounter) {
-        /*
-         * This cannot work properly unless Encounter has an ID field.
-         * Use deleteByID instead.
-         */
-        System.out.println("Cannot delete Encounter without an encounter ID.");
-    }
-
-    public void deleteByID(int encounterID) {
+        adapter = new EncounterSQLAdapter(encounter);
+        int encounterID = adapter.getEncounterID();
         String sql = "DELETE FROM ENCOUNTER WHERE ENCOUNTER_ID = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -258,23 +243,5 @@ public class EncounterDAO implements Dao<Encounter> {
             System.out.println("Error deleting encounter.");
             e.printStackTrace();
         }
-    }
-
-    private int getNextEncounterID() {
-        String sql = "SELECT MAX(ENCOUNTER_ID) FROM ENCOUNTER";
-
-        try (PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            if (rs.next()) {
-                return rs.getInt(1) + 1;
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error getting next encounter ID.");
-            e.printStackTrace();
-        }
-
-        return 1;
     }
 }

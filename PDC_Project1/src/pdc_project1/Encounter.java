@@ -19,6 +19,9 @@ public abstract class Encounter implements Serializable{
         return id;
     }
     
+    public void setID(int id){
+        this.id = id;
+    }
     
 }
 

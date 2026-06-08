@@ -81,7 +81,6 @@ public class DBManager {
     public void clearAllTables() {
         String[] tables = {
             "INVENTORY",
-            "STORY_PROGRESS",
             "PLAYER",
             "ENCOUNTER",
             "ITEM"
@@ -119,7 +118,6 @@ public class DBManager {
     public void DropAllTables() {
         String[] tables = {
             "INVENTORY",
-            "STORY_PROGRESS",
             "PLAYER",
             "ENCOUNTER",
             "ITEM"
