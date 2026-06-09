@@ -8,8 +8,8 @@ package controller;
  *
  * @author vishw
  */
-import pdc_project1.Player;
-import pdc_project1.Enemy;
+import model.Player;
+import model.Enemy;
 
 public class CombatController {
 

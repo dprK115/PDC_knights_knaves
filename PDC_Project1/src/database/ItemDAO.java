@@ -14,8 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import pdc_project1.ItemFactory;
-import pdc_project1.Item;
+import model.ItemFactory;
+import model.Item;
 
 public class ItemDAO implements Dao<Item> {
 

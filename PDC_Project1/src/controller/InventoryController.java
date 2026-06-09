@@ -8,7 +8,7 @@ package controller;
  *
  * @author vishw
  */
-import pdc_project1.Player;
+import model.Player;
 
 public class InventoryController {
 
