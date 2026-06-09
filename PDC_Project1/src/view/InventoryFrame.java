@@ -8,8 +8,8 @@ package view;
  *
  * @author vishw
  */
-import pdc_project1.Inventory;
-import pdc_project1.Item;
+import model.Inventory;
+import model.Item;
 
 import javax.swing.*;
 import java.awt.*;

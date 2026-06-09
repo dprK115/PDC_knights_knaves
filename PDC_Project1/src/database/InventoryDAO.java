@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import pdc_project1.Inventory;
-import pdc_project1.Item;
+import model.Inventory;
+import model.Item;
 
 public class InventoryDAO implements Dao<Inventory> {
 

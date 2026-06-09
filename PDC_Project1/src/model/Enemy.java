@@ -1,4 +1,4 @@
-package pdc_project1;
+package model;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
