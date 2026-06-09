@@ -37,7 +37,7 @@ public class SaveLoader {
         dao = new EncounterDAO(dbm, player);
         var encounters = (ArrayList) dao.loadAll();
         sm = new StoryManager(encounters);
-        sm.index = player.currentStoryIndex;
+        sm.index = player.currentStoryIndex -1;
         
         GameState loadedGS = new GameState(player, sm);
         return loadedGS;

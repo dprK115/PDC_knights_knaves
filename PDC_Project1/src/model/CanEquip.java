@@ -9,7 +9,7 @@ package model;
  * @author vishw
  */
 public interface CanEquip {
-    
-    void equip(int index);
-    
+
+    Item equip(int index);
+
 }

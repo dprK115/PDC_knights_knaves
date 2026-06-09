@@ -12,7 +12,7 @@ public class DifficultySet {
 
     Difficulty difficulty;
     static int enemyModifier;
-    static int PlayerModifier;
+    static int playerModifier;
     static int xpModifier;
 
     public DifficultySet(Difficulty difficulty) {
@@ -51,17 +51,17 @@ public class DifficultySet {
         switch (difficulty) {
             case EASY:
                 enemyModifier = 30;
-                PlayerModifier = 50;
+                playerModifier = 50;
                 xpModifier = 5;
                 break;
             case MEDIUM:
                 enemyModifier = 50;
-                PlayerModifier = 35;
+                playerModifier = 35;
                 xpModifier = 10;
                 break;
             case HARD:
                 enemyModifier = 100;
-                PlayerModifier = 25;
+                playerModifier = 25;
                 xpModifier = 15;
                 break;
         }

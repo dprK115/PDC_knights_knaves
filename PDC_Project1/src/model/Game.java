@@ -12,8 +12,6 @@ import java.util.Scanner;
 import database.DBManager;
 import database.DBInitialiser;
 
-
-
 public class Game {
 
     static Player player;
@@ -31,17 +29,18 @@ public class Game {
         //dbm.clearAllTables();
         DBInitialiser dbi = new DBInitialiser(dbm);
         //dbi.createTables();
-        
-        player = new Player("default");
 
+        player = new Player("default", Difficulty.EASY);
+        mainMenu.mainMenuStart();
         GameInit gi = new GameInit(dbm, player);
         gi.initialiseAndSave();
-        
-        manager = new StoryManager(gi.getGameEncounters());
-        
+
+        if (!loadedGameState) {
+            manager = new StoryManager(gi.getGameEncounters());
+        }
+
         difficultySet = new DifficultySet(Difficulty.EASY);
-        mainMenu.mainMenuStart();
-        
+
         gameMenu.gameMenuStart();
 
     }

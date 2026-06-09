@@ -26,7 +26,6 @@ public class MainMenu extends Game {
                 case 1:
                     CharacterCreation cc = new CharacterCreation();
                     player = cc.createMenu();
-                    ;
                     break;
                 case 2:
                     System.out.println("loading previous save files");
@@ -58,6 +57,7 @@ public class MainMenu extends Game {
                 default:
                     System.out.println("Error! Invalid Input\nPlease enter a number corresponding to a menu option");
             }
+            
             break;
 
         }
