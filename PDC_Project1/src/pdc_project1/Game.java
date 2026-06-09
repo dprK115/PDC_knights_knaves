@@ -47,7 +47,7 @@ public class Game {
     }
 
     public void quit() {
-        System.out.println("Closing game, Thanks for Plaing");
+        System.out.println("Closing game, Thanks for Playing");
         input.close();
         System.exit(0);
     }
