@@ -21,7 +21,7 @@ public class Game {
     static SaveManager sm = new SaveManager();
     static MainMenu mainMenu = new MainMenu();
     static GameMenu gameMenu = new GameMenu();
-    boolean loadedGameState = false;
+    static boolean loadedGameState = false;
     Encounter encounter;
     Scanner input = new Scanner(System.in);
     static DifficultySet difficultySet;
@@ -41,7 +41,7 @@ public class Game {
         
         difficultySet = new DifficultySet(Difficulty.EASY);
         mainMenu.mainMenuStart();
-
+        
         gameMenu.gameMenuStart();
 
     }
