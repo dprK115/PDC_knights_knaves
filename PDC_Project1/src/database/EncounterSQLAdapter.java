@@ -8,10 +8,10 @@ package database;
  *
  * @author lukea
  */
-import pdc_project1.Combat;
-import pdc_project1.Encounter;
-import pdc_project1.Story;
-import pdc_project1.Enemy;
+import model.Combat;
+import model.Encounter;
+import model.Story;
+import model.Enemy;
 
 public class EncounterSQLAdapter {
 

@@ -8,7 +8,7 @@ package controller;
  *
  * @author vishw
  */
-import pdc_project1.Game;
+import model.Game;
 import view.GameFrame;
 
 public class GameController {

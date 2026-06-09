@@ -14,10 +14,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import pdc_project1.Encounter;
-import pdc_project1.EncounterFactory;
-import pdc_project1.Item;
-import pdc_project1.Player;
+import model.Encounter;
+import model.EncounterFactory;
+import model.Item;
+import model.Player;
 
 public class EncounterDAO implements Dao<Encounter> {
 

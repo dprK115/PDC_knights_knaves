@@ -8,10 +8,10 @@ package database;
  *
  * @author lukea
  */
-import pdc_project1.Item;
-import pdc_project1.Weapon;
-import pdc_project1.Armor;
-import pdc_project1.Potion;
+import model.Item;
+import model.Weapon;
+import model.Armor;
+import model.Potion;
 
 
 public class ItemSQLAdapter {

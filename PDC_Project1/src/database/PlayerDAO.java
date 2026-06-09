@@ -15,10 +15,10 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 
-import pdc_project1.Player;
-import pdc_project1.Item;
-import pdc_project1.Weapon;
-import pdc_project1.Armor;
+import model.Player;
+import model.Item;
+import model.Weapon;
+import model.Armor;
 
 public class PlayerDAO implements Dao<Player> {
 

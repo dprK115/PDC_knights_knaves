@@ -2,26 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package pdc_project1;
+package model;
 
 /**
  *
- * @author lukea
+ * @author vishw
  */
-public class Armor extends Item {
-    int defenseModifier;
+public class Weapon extends Item {
     
-    public Armor(String name, int id, int defenseStat) {
+    int attackModifier;
+    
+    public Weapon( String name, int id, int attackModifier){
         super(name);
         this.id = id;
-        this.defenseModifier = defenseStat;
+        this.attackModifier = attackModifier;
     }
     
     @Override
     public int getStat(){
-        return this.defenseModifier;
+        return this.attackModifier;
     }
-        
-    
-    
 }

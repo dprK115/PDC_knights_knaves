@@ -2,27 +2,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package pdc_project1;
+package model;
 
 /**
  *
- * @author vishw
+ * @author lukea
  */
 import java.io.Serializable;
 
-public abstract class Encounter implements Serializable{
+public abstract class Item implements Serializable{
     private static final long serialVersionUID = 1L;
-    private int id;
-    public abstract void start(Player player);
+    public String name;
+    public int id;
+    
+    public Item(String name){
+    this.name = name;
+}
+    public abstract int getStat();
 
     public int getID() {
         return id;
     }
-    
-    public void setID(int id){
+
+    public void setID(int id) {
         this.id = id;
     }
     
+   
 }
-
-

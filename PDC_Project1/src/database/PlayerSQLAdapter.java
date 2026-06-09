@@ -8,9 +8,9 @@ package database;
  *
  * @author lukea
  */
-import pdc_project1.Player;
-import pdc_project1.Item;
-import pdc_project1.Game;
+import model.Player;
+import model.Item;
+import model.Game;
 
 public class PlayerSQLAdapter {
 
