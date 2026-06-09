@@ -38,8 +38,9 @@ public class CharacterCreation extends Game {
             System.out.println("You fell to the Vampire Lord Danil just shy of 2 decades ago");
             System.out.println("You must now reclaim your former domain and save the people of Dior");
             System.out.println("Best of luck in your journey " + charName);
-            player = new Player(charName);
-            return player;
+            
+            Player createdPlayer = new Player(charName, Difficulty.EASY);
+            return createdPlayer;
         } else if (yesNo.equals("n")) {
             return createMenu();
         } else {
