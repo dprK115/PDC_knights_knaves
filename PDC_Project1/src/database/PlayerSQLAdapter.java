@@ -12,6 +12,8 @@ import model.Player;
 import model.Item;
 import model.Game;
 
+import java.util.ArrayList;
+
 public class PlayerSQLAdapter {
 
     private int playerID;
@@ -50,6 +52,17 @@ public class PlayerSQLAdapter {
     }
 
     public int getPlayerID() {
+        int highestID = 0;
+        DBManager dbm = new DBManager();
+        Dao dao = new PlayerDAO(dbm);
+        ArrayList<Player> pList = (ArrayList) dao.loadAll();
+        for (Player p : pList) {
+            if (p.getID() > highestID) {
+                highestID = p.getID();
+            }
+        }
+        this.playerID = highestID + 1;
+
         return playerID;
     }
 
@@ -85,6 +98,5 @@ public class PlayerSQLAdapter {
         System.out.println(currentStoryIndex);
         return currentStoryIndex;
     }
-    
-    
+
 }
