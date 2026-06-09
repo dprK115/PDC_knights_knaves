@@ -82,6 +82,7 @@ public class PlayerSQLAdapter {
     }
 
     public int getCurrentStoryIndex() {
+        System.out.println(currentStoryIndex);
         return currentStoryIndex;
     }
     

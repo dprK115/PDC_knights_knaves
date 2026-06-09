@@ -41,6 +41,7 @@ public class StoryManager implements Serializable {
             
             return encounters.get(index++);
         }
+        index++;
         return null;
     }
 
