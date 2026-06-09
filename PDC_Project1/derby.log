@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Tue Jun 09 14:39:52 NZST 2026:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-019e-aa40-2ad9-00003faf5358 
+Tue Jun 09 14:55:38 NZST 2026:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-019e-aa4e-997f-00003faf5358 
 on database directory C:\Users\lukea\OneDrive\Documents\NetBeansProjects\PDC_knights_knaves\PDC_Project1\Knights_KnavesDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@5c647e05 
 Loaded from file:/C:/Users/lukea/OneDrive/Documents/NetBeansProjects/PDC_knights_knaves/PDC_Project1/lib/derby.jar
 java.vendor=Azul Systems, Inc.
