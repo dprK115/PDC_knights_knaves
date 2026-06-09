@@ -68,5 +68,6 @@ public class EncounterSQLAdapter {
 
     public int getLootItemID() {
         return lootItemID;
+        
     }
 }

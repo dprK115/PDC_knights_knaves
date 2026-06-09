@@ -33,7 +33,7 @@ public class GameSaver {
 
     private void savePlayer(Player player) {
         dao = new PlayerDAO(dbm);
-        dao.update(player);
+        dao.save(player);
         System.out.println("Player saved");
 
     }
