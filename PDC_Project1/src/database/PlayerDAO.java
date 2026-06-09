@@ -176,11 +176,10 @@ public class PlayerDAO implements Dao<Player> {
                         armor = itemDAO.loadByID(armorID);
                     }
 
-                    Player player = new Player(name);
+                    Player player = new Player(name, level, difficulty);
 
                     player.setID(playerID);
                     player.setName(name);
-                    player.setLevel(level);
                     player.setHealth(health);
                     player.setXp(xp);
 

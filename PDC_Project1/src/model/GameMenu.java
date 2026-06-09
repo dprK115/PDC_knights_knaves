@@ -63,8 +63,8 @@ public class GameMenu extends Game {
         if (yesNo.equals("y")) {
             System.out.println("please enter the number next to the item you would like to equip");
             int itemIndex = input.nextInt();
-            player.equip(itemIndex);
-            System.out.println("you have equipped " + player.equippedArmor.name);
+            var equippedItem = player.equip(itemIndex);
+            System.out.println("you have equipped " + equippedItem.name);
         } else if (yesNo.equals("n")) {
             return;
 

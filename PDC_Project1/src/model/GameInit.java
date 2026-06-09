@@ -141,8 +141,8 @@ public class GameInit {
                 player,
                 null,
                 "Markus",
-                2,
-                ironMail
+                1,
+                ironSword
         ));
 
         addEncounter(EncounterFactory.createEncounter(
@@ -179,7 +179,7 @@ public class GameInit {
                 null,
                 "Bandit",
                 2,
-                ironSword
+                ironMail
         ));
 
         addEncounter(EncounterFactory.createEncounter(
