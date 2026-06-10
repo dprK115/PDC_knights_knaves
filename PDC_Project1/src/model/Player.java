@@ -133,6 +133,10 @@ public class Player extends Character implements CanEquip, CanUse {
         }
 
         Enemy.health -= damage;
+
+if (Enemy.health < 0) {
+    Enemy.health = 0;
+}
     }
 
     @Override
