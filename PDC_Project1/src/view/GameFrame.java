@@ -10,6 +10,11 @@ package view;
  */
 import javax.swing.*;
 import java.awt.*;
+import model.GameState;
+import model.SaveManager;
+import model.Game;
+import model.Player;
+import model.Inventory;
 
 public class GameFrame extends JFrame {
 
@@ -54,25 +59,49 @@ public class GameFrame extends JFrame {
         });
 
         inventoryButton.addActionListener(e -> {
-        JOptionPane.showMessageDialog(
-            this,
-            "Inventory integration pending"
-        );
-        });
+
+    System.out.println(
+            "Inventory size: "
+            + Game.player.inventory.items.size()
+    );
+
+    Inventory inventory = Game.player.inventory;
+
+    InventoryFrame frame = new InventoryFrame(inventory);
+    frame.setVisible(true);
+});
 
         statsButton.addActionListener(e -> {
+
+            Player player = model.Game.player;
+
             JOptionPane.showMessageDialog(
                     this,
-                    "Player Stats\n\nHealth: 50\nAttack: 10\nDefense: 10"
+                    "Player Stats\n\n"
+                    + "Name: " + player.name
+                    + "\nHealth: " + player.health
+                    + "\nAttack: " + player.attack
+                    + "\nDefense: " + player.defense
+                    + "\nDifficulty Modifier: "
+                    + player.getDifficultyModifier()
             );
         });
 
-        saveButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Game Saved"
+saveButton.addActionListener(e -> {
+
+    GameState gameState =
+            new GameState(
+                    Game.player,
+                    Game.manager
             );
-        });
+
+    SaveManager.saveGame(gameState);
+
+    JOptionPane.showMessageDialog(
+            this,
+            "Game Saved"
+    );
+});
 
         buttonPanel.add(continueButton);
         buttonPanel.add(inventoryButton);

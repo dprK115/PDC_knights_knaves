@@ -12,6 +12,9 @@ import controller.GameController;
 import javax.swing.*;
 import java.awt.*;
 import view.DifficultyFrame;
+import model.Game;
+import model.GameState;
+import model.SaveManager;
 
 public class MainMenuFrame extends JFrame {
 
@@ -38,18 +41,40 @@ public class MainMenuFrame extends JFrame {
 
         newGameButton = new JButton("New Game");
         loadGameButton = new JButton("Load Game");
+        loadGameButton.addActionListener(e -> {
+
+    GameState loadedState = SaveManager.loadGame(1);
+
+    if (loadedState != null) {
+
+        Game.player = loadedState.getPlayer();
+        Game.manager = loadedState.getStoryManager();
+
+        GameFrame frame = new GameFrame();
+        frame.setVisible(true);
+
+        dispose();
+
+    } else {
+
+        JOptionPane.showMessageDialog(
+                this,
+                "No save found."
+        );
+    }
+});
         exitButton = new JButton("Exit");
 
         newGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         loadGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        exitButton.addActionListener(e -> controller.exitGame());
-        newGameButton.addActionListener(e -> {
-        DifficultyFrame frame = new DifficultyFrame();
-        frame.setVisible(true);
-        dispose();
-        });
+        exitButton.setActionCommand("EXIT");
+        exitButton.addActionListener(controller);
+
+        newGameButton.setActionCommand("NEW_GAME");
+        newGameButton.addActionListener(controller);
+        newGameButton.addActionListener(e -> dispose());
 
         panel.add(Box.createVerticalStrut(40));
         panel.add(title);
