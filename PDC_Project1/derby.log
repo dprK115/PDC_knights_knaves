@@ -95,7 +95,6 @@ Caused by: ERROR XSDB6: Another instance of Derby may have already booted the da
 	at java.base/java.security.AccessController.doPrivileged(AccessController.java:251)
 	at org.apache.derby.impl.jdbc.EmbedConnection.startPersistentService(Unknown Source)
 	... 40 more
-============= begin nested exception, level (1) ===========
 java.sql.SQLException: Another instance of Derby may have already booted the database C:\Users\vishw\OneDrive\Documents\NetBeansProjects\PDC_knights_knaves\PDC_Project1\Knights_KnavesDB.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
@@ -187,8 +186,6 @@ Caused by: ERROR XSDB6: Another instance of Derby may have already booted the da
 	at java.base/java.security.AccessController.doPrivileged(AccessController.java:251)
 	at org.apache.derby.impl.jdbc.EmbedConnection.startPersistentService(Unknown Source)
 	... 40 more
-============= end nested exception, level (1) ===========
-============= begin nested exception, level (2) ===========
 ERROR XSDB6: Another instance of Derby may have already booted the database C:\Users\vishw\OneDrive\Documents\NetBeansProjects\PDC_knights_knaves\PDC_Project1\Knights_KnavesDB.
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
@@ -276,7 +273,6 @@ ERROR XSDB6: Another instance of Derby may have already booted the database C:\U
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
 	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
-============= end nested exception, level (2) ===========
 Cleanup action completed
 Wed Jun 10 14:16:13 NZST 2026 Thread[#39,AWT-EventQueue-0,6,main] Cleanup action starting
 java.sql.SQLException: Failed to start database 'Knights_KnavesDB' with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@105be200, see the next exception for details.
@@ -376,7 +372,6 @@ Caused by: ERROR XSDB6: Another instance of Derby may have already booted the da
 	at java.base/java.security.AccessController.doPrivileged(AccessController.java:251)
 	at org.apache.derby.impl.jdbc.EmbedConnection.startPersistentService(Unknown Source)
 	... 41 more
-============= begin nested exception, level (1) ===========
 java.sql.SQLException: Another instance of Derby may have already booted the database C:\Users\vishw\OneDrive\Documents\NetBeansProjects\PDC_knights_knaves\PDC_Project1\Knights_KnavesDB.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
@@ -469,8 +464,6 @@ Caused by: ERROR XSDB6: Another instance of Derby may have already booted the da
 	at java.base/java.security.AccessController.doPrivileged(AccessController.java:251)
 	at org.apache.derby.impl.jdbc.EmbedConnection.startPersistentService(Unknown Source)
 	... 41 more
-============= end nested exception, level (1) ===========
-============= begin nested exception, level (2) ===========
 ERROR XSDB6: Another instance of Derby may have already booted the database C:\Users\vishw\OneDrive\Documents\NetBeansProjects\PDC_knights_knaves\PDC_Project1\Knights_KnavesDB.
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
@@ -559,7 +552,6 @@ ERROR XSDB6: Another instance of Derby may have already booted the database C:\U
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
 	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
-============= end nested exception, level (2) ===========
 Cleanup action completed
 Wed Jun 10 14:16:13 NZST 2026 Thread[#39,AWT-EventQueue-0,6,main] Cleanup action starting
 java.sql.SQLException: Failed to start database 'Knights_KnavesDB' with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@105be200, see the next exception for details.
@@ -659,7 +651,6 @@ Caused by: ERROR XSDB6: Another instance of Derby may have already booted the da
 	at java.base/java.security.AccessController.doPrivileged(AccessController.java:251)
 	at org.apache.derby.impl.jdbc.EmbedConnection.startPersistentService(Unknown Source)
 	... 41 more
-============= begin nested exception, level (1) ===========
 java.sql.SQLException: Another instance of Derby may have already booted the database C:\Users\vishw\OneDrive\Documents\NetBeansProjects\PDC_knights_knaves\PDC_Project1\Knights_KnavesDB.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
@@ -752,8 +743,6 @@ Caused by: ERROR XSDB6: Another instance of Derby may have already booted the da
 	at java.base/java.security.AccessController.doPrivileged(AccessController.java:251)
 	at org.apache.derby.impl.jdbc.EmbedConnection.startPersistentService(Unknown Source)
 	... 41 more
-============= end nested exception, level (1) ===========
-============= begin nested exception, level (2) ===========
 ERROR XSDB6: Another instance of Derby may have already booted the database C:\Users\vishw\OneDrive\Documents\NetBeansProjects\PDC_knights_knaves\PDC_Project1\Knights_KnavesDB.
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
@@ -842,5 +831,4 @@ ERROR XSDB6: Another instance of Derby may have already booted the database C:\U
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
 	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
-============= end nested exception, level (2) ===========
 Cleanup action completed
