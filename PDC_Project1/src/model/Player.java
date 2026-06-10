@@ -10,7 +10,7 @@ package model;
  */
 public class Player extends Character implements CanEquip, CanUse {
 
-    Inventory inventory = new Inventory();
+    public Inventory inventory = new Inventory();
     Item equippedArmor;
     Item equippedWeapon;
     int difficultyModifier;
@@ -21,7 +21,7 @@ public class Player extends Character implements CanEquip, CanUse {
 
     public Player(String name, Difficulty difficulty) {
         super(name);
-        setDifficulty(difficulty.ordinal());
+        setDifficulty(difficulty.ordinal() +1);
         this.difficultyModifier = DifficultySet.playerModifier;
         this.xpModifier = DifficultySet.xpModifier;
         this.level = 1;
@@ -33,6 +33,8 @@ public class Player extends Character implements CanEquip, CanUse {
         this.nextLevelXp = level * xpModifier;
         equippedArmor = new Armor("Dirty Clothes", 0, 0);
         equippedWeapon = new Weapon("Fists", 0, 0);
+        System.out.println("Difficulty selected: " + difficulty);
+        System.out.println("Player modifier: " + DifficultySet.playerModifier);
     }
 
     public Player(String name, int savedLevel, int difficultyValue) {

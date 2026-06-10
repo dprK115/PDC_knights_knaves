@@ -13,6 +13,8 @@ import model.Item;
 
 import javax.swing.*;
 import java.awt.*;
+import model.Game;
+import model.Player;
 
 public class InventoryFrame extends JFrame {
 
@@ -52,6 +54,24 @@ public class InventoryFrame extends JFrame {
         buttonPanel.add(useButton);
         buttonPanel.add(equipButton);
         buttonPanel.add(closeButton);
+        
+        Player player = Game.player;
+
+        useButton.addActionListener(e -> {
+        int selectedIndex = itemList.getSelectedIndex();
+        if (selectedIndex == -1) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Select an item first."
+            );
+        return;
+        }
+        player.use(selectedIndex);
+        JOptionPane.showMessageDialog(
+            this,
+            "Item used."
+            );
+        });
 
         closeButton.addActionListener(e -> dispose());
 

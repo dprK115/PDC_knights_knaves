@@ -10,6 +10,12 @@ package view;
  */
 import javax.swing.*;
 import java.awt.*;
+import model.Game;
+import model.Player;
+import model.Difficulty;
+import model.StoryManager;
+import database.DBManager;
+import model.GameInit;
 
 public class DifficultyFrame extends JFrame {
 
@@ -39,23 +45,44 @@ public class DifficultyFrame extends JFrame {
         hardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         easyButton.addActionListener(e -> {
-            GameFrame frame = new GameFrame();
-            frame.setVisible(true);
-            dispose();
+        Game.player = new Player("Hero", Difficulty.EASY);
+        DBManager dbm = new DBManager();
+        GameInit gi = new GameInit(dbm, Game.player);
+        gi.initialiseGameData();
+        Game.manager = new StoryManager(
+            gi.getGameEncounters()
+        );
+        GameFrame frame = new GameFrame();
+        frame.setVisible(true);
+        dispose();
         });
 
         mediumButton.addActionListener(e -> {
-            GameFrame frame = new GameFrame();
-            frame.setVisible(true);
-            dispose();
+        Game.player = new Player("Hero", Difficulty.MEDIUM);
+        DBManager dbm = new DBManager();
+        GameInit gi = new GameInit(dbm, Game.player);
+        gi.initialiseGameData();
+        Game.manager = new StoryManager(
+            gi.getGameEncounters()
+            );
+        GameFrame frame = new GameFrame();
+        frame.setVisible(true);
+        dispose();
         });
 
         hardButton.addActionListener(e -> {
-            GameFrame frame = new GameFrame();
-            frame.setVisible(true);
-            dispose();
-        });
-
+        Game.player = new Player("Hero", Difficulty.HARD);
+        DBManager dbm = new DBManager();
+        GameInit gi = new GameInit(dbm, Game.player);
+        gi.initialiseGameData();
+        Game.manager = new StoryManager(
+            gi.getGameEncounters()
+        );
+        GameFrame frame = new GameFrame();
+        frame.setVisible(true);
+        dispose();
+    });
+        
         panel.add(Box.createVerticalStrut(40));
         panel.add(title);
         panel.add(Box.createVerticalStrut(30));
