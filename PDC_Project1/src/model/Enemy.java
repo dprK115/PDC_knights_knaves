@@ -13,10 +13,10 @@ public class Enemy extends Character{
     
     public Enemy(String name, int level){
         super(name);
-        this.maxHealth = level * difficulty.enemyModifier;
+        this.maxHealth = level * difficulty.enemyModifier / 2;
         this.health = this.maxHealth;
-        this.attack = level * 5;
-        this.defense = level * 5;
+        this.attack = level * 1;
+        this.defense = level ;
         this.level = level;
         this.xp = level * difficulty.xpModifier;
     }
@@ -30,12 +30,17 @@ public class Enemy extends Character{
     public void attack(Character Enemy){
         int damage = this.attack - Enemy.defense;
         
-        if(damage < 0){
-            damage = 0;
+        if(damage < 1){
+            damage = 1;
         }
         
         Enemy.health -= damage;
-    }
+
+if (Enemy.health < 0) {
+    Enemy.health = 0;
+}
+}
+
     
     @Override
     public void defend(){
