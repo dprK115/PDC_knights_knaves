@@ -33,12 +33,14 @@ public class SaveLoader {
         this.player = loadPlayer(playerID);
         this.inventory = loadInventory(playerID);
         this.player.inventory = this.inventory;
-        
+
         dao = new EncounterDAO(dbm, player);
         var encounters = (ArrayList) dao.loadAll();
         sm = new StoryManager(encounters);
-        sm.index = player.currentStoryIndex -1;
-        
+        if (player.currentStoryIndex > 0) {
+            sm.index = player.currentStoryIndex - 1;
+        }
+
         GameState loadedGS = new GameState(player, sm);
         return loadedGS;
 

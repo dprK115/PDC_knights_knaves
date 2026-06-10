@@ -38,6 +38,22 @@ public class PlayerDAO implements Dao<Player> {
         }
     }
 
+    public int getNextPlayerID() {
+        String sql = "SELECT MAX(PLAYER_ID) FROM PLAYER";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt(1) + 1;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 1;
+    }
+
     @Override
     public void save(Player player) {
         if (elementExists(player)) {
@@ -50,6 +66,10 @@ public class PlayerDAO implements Dao<Player> {
     @Override
     public void insert(Player player) {
         PlayerSQLAdapter adapter = new PlayerSQLAdapter(player);
+
+        if (player.getID() <= 0) {
+            player.setID(getNextPlayerID());
+        }
 
         String sql = "INSERT INTO PLAYER "
                 + "(PLAYER_ID, NAME, LEVEL, HEALTH, EQUIPPED_WEAPON_ID, EQUIPPED_ARMOR_ID, XP, DIFFICULTY, CURRENT_ENCOUNTER_INDEX) "
@@ -100,7 +120,7 @@ public class PlayerDAO implements Dao<Player> {
                 + "EQUIPPED_ARMOR_ID = ?, "
                 + "XP = ?, "
                 + "DIFFICULTY = ?, "
-                + "CURRENT_ENCOUNTER_INDEX = ?"
+                + "CURRENT_ENCOUNTER_INDEX = ? "
                 + "WHERE PLAYER_ID = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
