@@ -15,6 +15,7 @@ import model.DifficultySet;
 import model.Enemy;
 import model.Player;
 import model.Game;
+import model.Combat;
 
 public class CombatFrame extends JFrame {
 
@@ -29,14 +30,19 @@ public class CombatFrame extends JFrame {
 
     private CombatController controller;
 
-    public CombatFrame() {
+    public CombatFrame(Combat combatEncounter) {
 
         
 
         Player player = Game.player;
-        Enemy enemy = new Enemy("Markus", 1);
+Enemy enemy = combatEncounter.getEnemy();
+System.out.println("Enemy: " + enemy.getName());
+System.out.println("Enemy HP: " + enemy.health);
+System.out.println("Enemy Defense: " + enemy.defense);
 
-        controller = new CombatController(player, enemy);
+System.out.println("Player Attack: " + player.attack);
+
+controller = new CombatController(player, enemy);
 
         setTitle("Combat");
         setSize(500, 350);
@@ -67,7 +73,11 @@ public class CombatFrame extends JFrame {
 
         combatLog = new JTextArea();
         combatLog.setEditable(false);
-        combatLog.append("Combat started against Markus\n");
+        combatLog.append(
+        "Combat started against "
+        + enemy.getName()
+        + "\n"
+);
 
         JScrollPane scrollPane = new JScrollPane(combatLog);
 
@@ -94,23 +104,42 @@ public class CombatFrame extends JFrame {
 
             updateLabels();
 
-            if (controller.enemyDefeated()) {
+           if (controller.enemyDefeated()) {
 
-                combatLog.append(
-                        controller.getEnemy().name
-                        + " has been defeated!\n"
-                );
+    combatLog.append(
+            controller.getEnemy().name
+            + " has been defeated!\n"
+    );
 
-                attackButton.setEnabled(false);
-                defendButton.setEnabled(false);
-                useItemButton.setEnabled(false);
+    System.out.println(
+            "Before heal: "
+            + controller.getPlayer().health
+    );
 
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Victory! Markus has been defeated."
-                );
-            }
-        });
+    controller.getPlayer().health =
+            controller.getPlayer().maxHealth;
+
+    System.out.println(
+            "After heal: "
+            + controller.getPlayer().health
+    );
+
+    updateLabels();
+
+    attackButton.setEnabled(false);
+    defendButton.setEnabled(false);
+    useItemButton.setEnabled(false);
+
+    JOptionPane.showMessageDialog(
+            this,
+            "Victory! "
+            + controller.getEnemy().getName()
+            + " has been defeated."
+    );
+}
+           });
+        
+           
 
         defendButton.addActionListener(e -> {
 
@@ -156,9 +185,9 @@ public class CombatFrame extends JFrame {
         );
     }
 
-    public static void main(String[] args) {
+   // public static void main(String[] args) {
 
-        CombatFrame frame = new CombatFrame();
-        frame.setVisible(true);
-    }
+      //  CombatFrame frame = new CombatFrame();
+     //   frame.setVisible(true);
+   // }
 }
