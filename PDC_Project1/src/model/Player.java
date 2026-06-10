@@ -128,8 +128,8 @@ public class Player extends Character implements CanEquip, CanUse {
     public void attack(Character Enemy) {
         int damage = this.attack - Enemy.defense;
 
-        if (damage < 0) {
-            damage = 0;
+        if (damage < 1) {
+            damage = 1;
         }
 
         Enemy.health -= damage;

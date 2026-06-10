@@ -1,20 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package view;
 
-/**
- *
- * @author vishw
- */
 import javax.swing.*;
 import java.awt.*;
+
 import model.GameState;
 import model.SaveManager;
 import model.Game;
 import model.Player;
 import model.Inventory;
+import model.Encounter;
+import model.Story;
+import model.Combat;
 
 public class GameFrame extends JFrame {
 
@@ -54,26 +50,48 @@ public class GameFrame extends JFrame {
         saveButton = new JButton("Save");
 
         continueButton.addActionListener(e -> {
-            CombatFrame combat = new CombatFrame();
-            combat.setVisible(true);
+
+            Encounter encounter = Game.manager.getNextEncounter();
+
+            if (encounter == null) {
+                storyArea.setText("The End");
+                return;
+            }
+
+            if (encounter instanceof Story) {
+
+                Story story = (Story) encounter;
+
+                storyArea.setText(
+                        story.getText()
+                );
+
+            } else if (encounter instanceof Combat) {
+
+                Combat combat = (Combat) encounter;
+
+                CombatFrame frame = new CombatFrame(combat);
+                frame.setVisible(true);
+            }
+
         });
 
         inventoryButton.addActionListener(e -> {
 
-    System.out.println(
-            "Inventory size: "
-            + Game.player.inventory.items.size()
-    );
+            System.out.println(
+                    "Inventory size: "
+                    + Game.player.inventory.items.size()
+            );
 
-    Inventory inventory = Game.player.inventory;
+            Inventory inventory = Game.player.inventory;
 
-    InventoryFrame frame = new InventoryFrame(inventory);
-    frame.setVisible(true);
-});
+            InventoryFrame frame = new InventoryFrame(inventory);
+            frame.setVisible(true);
+        });
 
         statsButton.addActionListener(e -> {
 
-            Player player = model.Game.player;
+            Player player = Game.player;
 
             JOptionPane.showMessageDialog(
                     this,
@@ -87,21 +105,21 @@ public class GameFrame extends JFrame {
             );
         });
 
-saveButton.addActionListener(e -> {
+        saveButton.addActionListener(e -> {
 
-    GameState gameState =
-            new GameState(
-                    Game.player,
-                    Game.manager
+            GameState gameState =
+                    new GameState(
+                            Game.player,
+                            Game.manager
+                    );
+
+            SaveManager.saveGame(gameState);
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Game Saved"
             );
-
-    SaveManager.saveGame(gameState);
-
-    JOptionPane.showMessageDialog(
-            this,
-            "Game Saved"
-    );
-});
+        });
 
         buttonPanel.add(continueButton);
         buttonPanel.add(inventoryButton);
