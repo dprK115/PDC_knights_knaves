@@ -54,9 +54,16 @@ public class PlayerDAO implements Dao<Player> {
         return 1;
     }
 
+    public boolean playerExists(Player player) {
+        PlayerSQLAdapter adapter = new PlayerSQLAdapter(player);
+        Player comparePlayer = loadByID(adapter.getPlayerID());
+        return comparePlayer.equals(player);
+
+    }
+
     @Override
     public void save(Player player) {
-        if (elementExists(player)) {
+        if (elementExists(player) && playerExists(player)) {
             update(player);
         } else {
             insert(player);
@@ -65,11 +72,9 @@ public class PlayerDAO implements Dao<Player> {
 
     @Override
     public void insert(Player player) {
-        PlayerSQLAdapter adapter = new PlayerSQLAdapter(player);
 
-        if (player.getID() <= 0) {
-            player.setID(getNextPlayerID());
-        }
+        player.setID(getNextPlayerID());
+        PlayerSQLAdapter adapter = new PlayerSQLAdapter(player);
 
         String sql = "INSERT INTO PLAYER "
                 + "(PLAYER_ID, NAME, LEVEL, HEALTH, EQUIPPED_WEAPON_ID, EQUIPPED_ARMOR_ID, XP, DIFFICULTY, CURRENT_ENCOUNTER_INDEX) "
