@@ -248,13 +248,7 @@ public class SaveLoaderTest {
         StoryManager loadedManager = loadedState.getStoryManager();
 
         // Assert
-        /*
-         * Your SaveLoader currently does:
-         * sm.index = player.currentStoryIndex - 1;
-         *
-         * Since testPlayer currentStoryIndex is 1,
-         * the loaded StoryManager index should be 0.
-         */
+        
         assertEquals(0, loadedManager.getIndex());
     }
 

@@ -55,11 +55,7 @@ public class GameSaverTest {
         inventoryDAO = new InventoryDAO(dbm, TEST_PLAYER_ID);
         itemDAO = new ItemDAO(dbm);
 
-        /*
-         * Important:
-         * If your PlayerSQLAdapter still uses Game.manager.getIndex(),
-         * this prevents null pointer errors during testing.
-         */
+        
         Game.manager = new StoryManager(new ArrayList<Encounter>());
 
         testPotion = ItemFactory.createItem(
