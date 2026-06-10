@@ -15,8 +15,8 @@ public class Enemy extends Character{
         super(name);
         this.maxHealth = level * difficulty.enemyModifier / 2;
         this.health = this.maxHealth;
-        this.attack = level * 5;
-        this.defense = level * 2;
+        this.attack = level * 1;
+        this.defense = level ;
         this.level = level;
         this.xp = level * difficulty.xpModifier;
     }
@@ -35,7 +35,12 @@ public class Enemy extends Character{
         }
         
         Enemy.health -= damage;
-    }
+
+if (Enemy.health < 0) {
+    Enemy.health = 0;
+}
+}
+
     
     @Override
     public void defend(){
