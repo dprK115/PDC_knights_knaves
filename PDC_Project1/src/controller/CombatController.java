@@ -36,4 +36,8 @@ public class CombatController {
     public Enemy getEnemy() {
         return enemy;
     }
+
+    public boolean enemyDefeated() {
+        return enemy.health <= 0;
+    }
 }

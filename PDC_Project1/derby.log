@@ -1,12 +1,12 @@
 ----------------------------------------------------------------
-Tue Jun 09 14:55:38 NZST 2026:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-019e-aa4e-997f-00003faf5358 
-on database directory C:\Users\lukea\OneDrive\Documents\NetBeansProjects\PDC_knights_knaves\PDC_Project1\Knights_KnavesDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@5c647e05 
-Loaded from file:/C:/Users/lukea/OneDrive/Documents/NetBeansProjects/PDC_knights_knaves/PDC_Project1/lib/derby.jar
-java.vendor=Azul Systems, Inc.
+Wed Jun 10 13:10:51 NZST 2026:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-019e-af15-0552-00001ebf92f8 
+on database directory C:\Users\vishw\OneDrive\Documents\NetBeansProjects\PDC_knights_knaves\PDC_Project1\Knights_KnavesDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@105be200 
+Loaded from file:/C:/Users/vishw/OneDrive/Documents/NetBeansProjects/PDC_knights_knaves/PDC_Project1/lib/derby.jar
+java.vendor=Eclipse Adoptium
 java.runtime.version=25.0.2+10-LTS
-user.dir=C:\Users\lukea\OneDrive\Documents\NetBeansProjects\PDC_knights_knaves\PDC_Project1
-os.name=Windows 10
+user.dir=C:\Users\vishw\OneDrive\Documents\NetBeansProjects\PDC_knights_knaves\PDC_Project1
+os.name=Windows 11
 os.arch=amd64
 os.version=10.0
 derby.system.home=null

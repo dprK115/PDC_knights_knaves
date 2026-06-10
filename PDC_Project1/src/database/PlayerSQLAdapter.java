@@ -52,17 +52,7 @@ public class PlayerSQLAdapter {
     }
 
     public int getPlayerID() {
-        int highestID = 0;
-        DBManager dbm = new DBManager();
-        Dao dao = new PlayerDAO(dbm);
-        ArrayList<Player> pList = (ArrayList) dao.loadAll();
-        for (Player p : pList) {
-            if (p.getID() > highestID) {
-                highestID = p.getID();
-            }
-        }
-        this.playerID = highestID + 1;
-
+       
         return playerID;
     }
 

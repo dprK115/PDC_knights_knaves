@@ -8,52 +8,129 @@ package view;
  *
  * @author vishw
  */
+import controller.CombatController;
 import javax.swing.*;
 import java.awt.*;
+import model.DifficultySet;
+import model.Enemy;
+import model.Player;
+import model.Game;
 
 public class CombatFrame extends JFrame {
 
-    JLabel playerHealthLabel;
-    JLabel enemyHealthLabel;
+    private JLabel playerHealthLabel;
+    private JLabel enemyHealthLabel;
 
-    JButton attackButton;
-    JButton defendButton;
-    JButton useItemButton;
+    private JButton attackButton;
+    private JButton defendButton;
+    private JButton useItemButton;
+
+    private JTextArea combatLog;
+
+    private CombatController controller;
 
     public CombatFrame() {
+
+        
+
+        Player player = Game.player;
+        Enemy enemy = new Enemy("Markus", 1);
+
+        controller = new CombatController(player, enemy);
 
         setTitle("Combat");
         setSize(500, 350);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
+        JPanel mainPanel = new JPanel(new BorderLayout());
 
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new GridLayout(2, 1));
+        JPanel infoPanel = new JPanel(new GridLayout(2, 1));
 
-        enemyHealthLabel = new JLabel("Enemy: Markus    HP: 30");
-        playerHealthLabel = new JLabel("Player: Current Player HP: 50");
+        enemyHealthLabel = new JLabel();
+        playerHealthLabel = new JLabel();
+
+        updateLabels();
 
         infoPanel.add(enemyHealthLabel);
         infoPanel.add(playerHealthLabel);
-
-        JPanel buttonPanel = new JPanel();
 
         attackButton = new JButton("Attack");
         defendButton = new JButton("Defend");
         useItemButton = new JButton("Use Item");
 
+        JPanel buttonPanel = new JPanel();
+
         buttonPanel.add(attackButton);
         buttonPanel.add(defendButton);
         buttonPanel.add(useItemButton);
 
-        JTextArea combatLog = new JTextArea();
+        combatLog = new JTextArea();
         combatLog.setEditable(false);
-        combatLog.setText("Combat started...\n");
+        combatLog.append("Combat started against Markus\n");
 
         JScrollPane scrollPane = new JScrollPane(combatLog);
+
+        attackButton.addActionListener(e -> {
+
+        controller.attack();
+        combatLog.append(
+        controller.getPlayer().name
+        + " attacks "
+        + controller.getEnemy().name
+        + "\n"
+        );
+
+        if (!controller.enemyDefeated()) {
+        controller.getEnemy().attack(controller.getPlayer());
+        controller.getPlayer().undefend();
+        combatLog.append(
+            controller.getEnemy().name
+            + " attacks "
+            + controller.getPlayer().name
+            + "\n"
+            );
+        }
+
+            updateLabels();
+
+            if (controller.enemyDefeated()) {
+
+                combatLog.append(
+                        controller.getEnemy().name
+                        + " has been defeated!\n"
+                );
+
+                attackButton.setEnabled(false);
+                defendButton.setEnabled(false);
+                useItemButton.setEnabled(false);
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Victory! Markus has been defeated."
+                );
+            }
+        });
+
+        defendButton.addActionListener(e -> {
+
+            controller.defend();
+
+            combatLog.append(
+                    controller.getPlayer().name
+                    + " raises their defence.\n"
+            );
+
+            updateLabels();
+        });
+
+        useItemButton.addActionListener(e -> {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Item usage not implemented yet."
+            );
+        });
 
         mainPanel.add(infoPanel, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
@@ -62,7 +139,25 @@ public class CombatFrame extends JFrame {
         add(mainPanel);
     }
 
+    private void updateLabels() {
+
+        enemyHealthLabel.setText(
+                "Enemy: "
+                + controller.getEnemy().name
+                + "    HP: "
+                + controller.getEnemy().health
+        );
+
+        playerHealthLabel.setText(
+                "Player: "
+                + controller.getPlayer().name
+                + "    HP: "
+                + controller.getPlayer().health
+        );
+    }
+
     public static void main(String[] args) {
+
         CombatFrame frame = new CombatFrame();
         frame.setVisible(true);
     }
