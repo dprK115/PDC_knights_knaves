@@ -70,7 +70,7 @@ public class InventoryFrame extends JFrame {
         equipButton = new JButton("Equip");
         closeButton = new JButton("Close");
 
-        buttonPanel.add(useButton);
+        //buttonPanel.add(useButton);
         buttonPanel.add(equipButton);
         buttonPanel.add(closeButton);
 

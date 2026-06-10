@@ -67,7 +67,7 @@ public class CombatFrame extends JFrame {
 
         buttonPanel.add(attackButton);
         buttonPanel.add(defendButton);
-        buttonPanel.add(useItemButton);
+        
 
         combatLog = new JTextArea();
         combatLog.setEditable(false);
@@ -181,13 +181,6 @@ public class CombatFrame extends JFrame {
             updateLabels();
         });
 
-        useItemButton.addActionListener(e -> {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Item usage not implemented yet."
-            );
-        });
 
         mainPanel.add(infoPanel, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
