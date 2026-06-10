@@ -14,7 +14,7 @@ import database.DBInitialiser;
 
 public class Game {
 
-    static Player player;
+    public static Player player;
     public static StoryManager manager;
     static SaveManager sm = new SaveManager();
     static MainMenu mainMenu = new MainMenu();
